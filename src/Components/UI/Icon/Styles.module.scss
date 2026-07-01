@@ -1,0 +1,19 @@
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  
+  svg {
+    cursor: pointer; 
+  }
+
+  &:hover {
+    opacity: 0.5;
+  }
+}
+
+.icon_default {
+  svg {
+    cursor: default;
+  }
+}
