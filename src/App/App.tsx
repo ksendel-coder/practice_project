@@ -12,16 +12,18 @@ function AppComponent() {
   return (
     <>
       <div className={styles.block}>
-        <Button color="primary" size="l" radius={5}>Посмотреть каталог фильмов</Button>
+        <Button color="primary" size="main" radius={5}>Посмотреть каталог фильмов</Button>
+        <Button color="transparent" size="nav">Новости</Button>
         <Input placeholder="Введите для поиска..." value={search} onChange={setSearch}/>
         <Icon name="search"/>
         <Icon name="user"/>
       </div>
-        <div className={styles.card}>
-          <Card title='' image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg' onView={() => console.log('Смотреть')} />
-          <Card title='' image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg' onView={() => console.log('Смотреть')} />
-          <Card title='' image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg' onView={() => console.log('Смотреть')} />
-        </div>
+      <div className={styles.card}>
+        <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
+        <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
+        <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
+      </div>
+      <Card size='long' image='https://i.amediateka.tech/resize/1920x960/_stor_/cms/content-contentasset/8/3a/5817f125101583fc94c8c3f70c08783a-10160-a9d6d5c8396645688d71203ed100f40a.jpg'/>
     </>
   );
 }

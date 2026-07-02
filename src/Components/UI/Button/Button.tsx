@@ -2,7 +2,7 @@ import { memo } from 'react';
 import styles from './Styles.module.scss';
 
 interface ButtonProps {
-  size?: 'm' | 'l' | 's' | 'ss' | 'min';
+  size?: 'nav' | 'main' | 'long';
   color?: 'primary' | 'transparent';
   children?: React.ReactNode;
   onClick?: () => void;
@@ -11,7 +11,7 @@ interface ButtonProps {
 }
 
 function ButtonComponent({
-  size = 'm',
+  size = 'main',
   color = 'primary',
   children,
   onClick,

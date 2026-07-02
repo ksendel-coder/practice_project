@@ -3,21 +3,19 @@ import styles from './Styles.module.scss';
 import { Button } from '../Button';
 
 interface CardProps {
-  title: string;
   image?: string;
-  size?: 's' | 'l' | 'm'; 
-  onView?: () => void;
+  size?: 'long' | 'main'; 
 }
 
-function CardComponent({ title, image, size = 's', onView }: CardProps) {
+function CardComponent({ image, size = 'main'}: CardProps) {
+  const buttonSize = size === 'long' ? 'long' : 'main';
   return (
-    <div className={`${styles.card} ${styles[`card_${size}`]}`}>
-      {image && <img src={image} alt={title} className={styles.image} />}  {/* ← добавил className */}
-      <h3 className={styles.title}>{title}</h3>  {/* ← добавил className */}
+    <div className={`card ${styles.card} ${styles[`card_${size}`]}`}>
+      {image && <img src={image} className={`card-image ${styles.image}`} />} 
       <Button 
-        size="s" 
+        size={buttonSize} 
         color="primary" 
-        onClick={onView}
+        radius={5}
       >
         Посмотреть
       </Button>
