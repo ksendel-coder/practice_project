@@ -1,8 +1,9 @@
 import { memo } from 'react';
 import styles from './Styles.module.scss';
+import cn from 'classnames';
 
 interface ButtonProps {
-  size?: 'nav' | 'main' | 'long';
+  size?: 'nav' | 'main' | 'long' | 'min';
   color?: 'primary' | 'transparent';
   children?: React.ReactNode;
   onClick?: () => void;
@@ -23,7 +24,7 @@ function ButtonComponent({
       style={{ borderRadius: radius ? `${radius}px` : '' }}
       onClick={onClick}
       type={type}
-      className={`${styles.button} ${styles[`button_${color}`]} ${styles[`button_${size}`]}`}
+      className={cn(styles.button, styles[`button_${color}`], styles[`button_${size}`])}
     >
       {children}
     </button>

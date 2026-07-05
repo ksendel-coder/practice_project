@@ -9,3 +9,13 @@
   padding-bottom: 30px;
   align-items: center;
 }
+
+.filters {
+  display: flex;
+  gap: 12px;
+  padding: 20px;
+  background: #ffffff0d;
+  border-radius: 12px;
+  max-width: fit-content;
+  margin: 20px 0;
+}

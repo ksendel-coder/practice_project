@@ -1,0 +1,47 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-weight: 600;
+  transition: color 0.3s ease;
+}
+
+.input {
+  padding: 12px 16px;
+  background: #ffffff0d;
+  border: 2px solid #ffffff1a;
+  border-radius: 10px;
+  color: #FFFFFF;
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: all 0.3s ease;
+  width: 100%;
+  box-sizing: border-box;
+
+  &::placeholder {
+    color: #ffffff4d;
+    font-weight: 400;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: #ffffff33;
+    background: #ffffff14;
+  }
+
+  &:focus:not(:disabled) {
+    border-color: #686DE0;
+    background: #ffffff14;
+    box-shadow: 0 0 0 4px #686de026;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #ffffff05;
+  }
+}
+

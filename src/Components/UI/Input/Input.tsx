@@ -1,5 +1,6 @@
 import { memo } from 'react';
 import styles from './Styles.module.scss';
+import cn from 'classnames';
 
 interface InputProps {
   placeholder?: string;
@@ -30,7 +31,7 @@ function InputComponent({
 
       <input
         type={type}
-        className={`${styles.input} ${error ? styles.inputError : ''}`}
+        className={cn(styles.input, {[styles.inputError] : error})}
         placeholder={placeholder}
         value={value}
         onChange={(e) => onChange(e.target.value)}

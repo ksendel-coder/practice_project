@@ -2,10 +2,11 @@ import { memo } from 'react';
 import styles from './Styles.module.scss';
 
 interface IconProps {
-  name: 'search' | 'user';
+  name: 'search' | 'user' | 'arrowUp';
   size?: number;
   color?: string;
   onClick?: () => void;
+  className?: string;
 }
 
 const icons = {
@@ -29,6 +30,19 @@ const icons = {
           strokeLinecap="round" 
           strokeLinejoin="round" 
         />
+    </svg>
+  ),
+  arrowUp: (
+    <svg width="40" height="48"
+      viewBox="0 0 40 48" 
+      fill="none" 
+      stroke="White" 
+      strokeWidth="6"
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+    >
+      <line x1="20" y1="8" x2="20" y2="40" />
+      <polyline points="6 18, 20 4, 34 18" />
     </svg>
   ),
 };
