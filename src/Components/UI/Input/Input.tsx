@@ -12,6 +12,7 @@ interface InputProps {
   type?: 'text' | 'email' | 'password' | 'number';
   disabled?: boolean;
   className?: string;
+  name?: string;
 }
 
 function InputComponent({
