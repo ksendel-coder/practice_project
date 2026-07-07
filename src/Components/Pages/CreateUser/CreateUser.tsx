@@ -16,7 +16,7 @@ function CreateUserComponent() {
     },
   });
 
-  const onSubmit = () => (data: InferType<typeof createSchema>) => {
+  const onSubmit = (data: InferType<typeof createSchema>) => {
     console.log(data);
   };
 
