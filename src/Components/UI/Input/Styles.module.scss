@@ -43,5 +43,14 @@
     cursor: not-allowed;
     background: #ffffff05;
   }
+
+  &.error {
+    border-color: #ff4d4f;
+  }
 }
 
+.errorText {
+  font-size: 13px;
+  color: #ff4d4f;
+  font-family: inherit;
+}

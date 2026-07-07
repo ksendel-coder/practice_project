@@ -54,8 +54,8 @@ function CreateUserComponent() {
           )}
         />
 
-        <div className={styles.container__buttons}>
-          <Button type="submit" size="nav" color="primary">
+        <div className={styles.container_buttons}>
+          <Button type="submit" size="main" color="primary">
             {'Создать'}
           </Button>
         </div>

@@ -9,8 +9,11 @@ import { Card } from "../Components/UI/Card";
 import { ScrollToTop } from "../Components/UI/ScrollToTop";
 import { Checkbox } from "../Components/UI/Checkbox";
 import { Pagination } from "../Components/UI/Pagination";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CreateUser } from "../Components/Pages/CreateUser";
 
 const genres = ['Все', 'Фантастика', 'Экшн', 'Драма', 'Комедия'];
+
 const initialFilters: Record<string, boolean> = {
   Все: false,
   Фантастика: false,
@@ -19,23 +22,31 @@ const initialFilters: Record<string, boolean> = {
   Комедия: false,
 };
 
-function AppComponent() {
+// 🔹 Компонент главной страницы
+function HomePage() {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState(initialFilters);
-  
-  const toggleFilter = (genre: string) => {
-    setFilters(prev => ({...prev,[genre]: !prev[genre]}));
-  };
-
   const [currentPage, setCurrentPage] = useState(1);
   const totalPage = 10;
+
+  const toggleFilter = (genre: string) => {
+    setFilters(prev => ({ ...prev, [genre]: !prev[genre] }));
+  };
 
   return (
     <>
       <div className={styles.block}>
-        <Button color="primary" size="main" radius={5}>Посмотреть каталог фильмов</Button>
-        <Button color="transparent" size="nav">Новости</Button>
-        <Input placeholder="Введите для поиска..." value={search} onChange={setSearch}/>
+        <Button color="primary" size="main" radius={5}>
+          Посмотреть каталог фильмов
+        </Button>
+        <Button color="transparent" size="nav">
+          Новости
+        </Button>
+        <Input 
+          placeholder="Введите для поиска..." 
+          value={search} 
+          onChange={setSearch}
+        />
         <Icon name="search"/>
         <Icon name="user"/>
       </div>
@@ -46,10 +57,13 @@ function AppComponent() {
         <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
       </div>
 
-      <Card size='long' image='https://i.amediateka.tech/resize/1920x960/_stor_/cms/content-contentasset/8/3a/5817f125101583fc94c8c3f70c08783a-10160-a9d6d5c8396645688d71203ed100f40a.jpg'/>
-      
-      <div className="buttonScroll"><ScrollToTop></ScrollToTop></div>
-      
+      <Card 
+        size='long' 
+        image='https://i.amediateka.tech/resize/1920x960/_stor_/cms/content-contentasset/8/3a/5817f125101583fc94c8c3f70c08783a-10160-a9d6d5c8396645688d71203ed100f40a.jpg'
+      />
+
+      <ScrollToTop />
+
       <div className={styles.filters}>
         {genres.map(genre => (
           <Checkbox 
@@ -60,13 +74,24 @@ function AppComponent() {
           />
         ))}
       </div>
-      
+
       <Pagination
         currentPage={currentPage}
         totalPage={totalPage}
         onChange={setCurrentPage}
       />
     </>
+  );
+}
+
+function AppComponent() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/createUser" element={<CreateUser />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
