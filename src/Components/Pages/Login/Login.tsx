@@ -7,18 +7,26 @@ import { Input } from '../../UI/Input';
 import { loginSchema } from './schema';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from "yup";
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from '../../../Contexts/UserContext';
 
 function LoginComponent() {
+  const navigate = useNavigate();  
+  const { setIsAuth, setIsAdmin } = useUserContext();  
   const loginForm = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
     username: '',
     password: '',
+    remember: false,
     },
   });
 
   const onSubmit = (data: InferType<typeof loginSchema>) => {
     console.log(data);
+    setIsAuth(true);
+    setIsAdmin(false);
+    navigate('/');
   };
 
   return (

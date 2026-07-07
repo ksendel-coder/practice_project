@@ -12,6 +12,8 @@ import { Pagination } from "../Components/UI/Pagination";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CreateUser } from "../Components/Pages/CreateUser";
 import { Login } from "../Components/Pages/Login/Login";
+import { UserProvider } from "../Contexts/UserContext";
+import ProtectedPages from "../Components/ProtectedPages";
 
 const genres = ['Все', 'Фантастика', 'Экшн', 'Драма', 'Комедия'];
 
@@ -23,7 +25,6 @@ const initialFilters: Record<string, boolean> = {
   Комедия: false,
 };
 
-// 🔹 Компонент главной страницы
 function HomePage() {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState(initialFilters);
@@ -63,7 +64,7 @@ function HomePage() {
         image='https://i.amediateka.tech/resize/1920x960/_stor_/cms/content-contentasset/8/3a/5817f125101583fc94c8c3f70c08783a-10160-a9d6d5c8396645688d71203ed100f40a.jpg'
       />
 
-      <ScrollToTop />
+      <div className="buttonScroll"><ScrollToTop /></div>
 
       <div className={styles.filters}>
         {genres.map(genre => (
@@ -87,13 +88,14 @@ function HomePage() {
 
 function AppComponent() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/createUser" element={<CreateUser />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-    </BrowserRouter>
+    <UserProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<ProtectedPages />} />
+        </Routes>
+      </BrowserRouter>
+    </UserProvider>
   );
 }
 

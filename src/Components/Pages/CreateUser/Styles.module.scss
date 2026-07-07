@@ -58,7 +58,6 @@
   }
 }
 
-// 🔹 Ссылка на вход (опционально)
 .container_loginLink {
   text-align: center;
   font-size: 14px;
@@ -74,6 +73,7 @@
     &:hover {
       color: #8B8FEC;
       text-decoration: underline;
+      text-underline-offset: 2px;
     }
   }
 }
