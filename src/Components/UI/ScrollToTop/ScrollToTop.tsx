@@ -15,7 +15,7 @@ function ScrollToTopComponent() {
 
   useEffect(() => {
     const checkScroll = () => {
-      setVisible(window.scrollY > 100);
+      setVisible(window.scrollY > 400);
     };
     window.addEventListener('scroll', checkScroll);
     return () => window.removeEventListener('scroll', checkScroll);

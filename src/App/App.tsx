@@ -9,11 +9,13 @@ import { Card } from "../Components/UI/Card";
 import { ScrollToTop } from "../Components/UI/ScrollToTop";
 import { Checkbox } from "../Components/UI/Checkbox";
 import { Pagination } from "../Components/UI/Pagination";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { CreateUser } from "../Components/Pages/CreateUser";
 import { Login } from "../Components/Pages/Login/Login";
 import { UserProvider } from "../Contexts/UserContext";
 import ProtectedPages from "../Components/ProtectedPages";
+import { Header } from "../Components/Pages/Header/Header";
+import { Home } from "../Components/Pages/Home/Home";
 
 const genres = ['Все', 'Фантастика', 'Экшн', 'Драма', 'Комедия'];
 
@@ -86,17 +88,31 @@ function HomePage() {
   );
 }
 
+
+
 function AppComponent() {
   return (
     <UserProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<ProtectedPages />} />
+          <Route path="/" element={<WrappPages/>}>
+          <Route index element={<Home/>}/>
+            <Route path="/login" element={<Login />} />
+          </Route>
+          <Route path="/CreateUser" element={<CreateUser />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
   );
+}
+
+function WrappPages() {
+  return(
+    <>
+    <Header/>
+    <Outlet/>
+    </>
+  )
 }
 
 export const App = AppComponent;

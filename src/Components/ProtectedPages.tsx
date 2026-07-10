@@ -4,7 +4,7 @@ import { useUserContext } from '../Contexts/UserContext';
 function ProtectedPages() {
   const { isAuth } = useUserContext();
 
-  if (!isAuth) {
+  if (isAuth) {
     return <Navigate to="/login" replace />;
   }
   return <Outlet />;

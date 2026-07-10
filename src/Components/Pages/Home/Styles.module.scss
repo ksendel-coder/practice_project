@@ -1,0 +1,49 @@
+.main {
+  font-family: inherit;
+  font-size: inherit;
+  color: #ffffff;
+  width: 95vw;
+
+  &__title {
+    font-size: 70px;
+    line-height: 100%;
+    margin-bottom: 15px;
+    font-weight: 700;
+
+    &_two {
+      font-size: 35px;
+      font-weight: 700;
+      margin-bottom: 50px;
+    }
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    width: 60vw;
+    line-height: 125%;
+    gap: 30px;
+    height: 100vh;
+    justify-content: center;
+  }
+
+  &__container {
+    height: 100vh;
+
+    &_filmTop {
+      display: flex;
+      justify-content: space-between;
+
+      &_card {
+        margin: 0 auto;
+      }
+    }
+  }
+  
+  &__films_listCard {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+  }
+}
