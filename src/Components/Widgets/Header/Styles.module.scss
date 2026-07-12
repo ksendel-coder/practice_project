@@ -1,0 +1,87 @@
+.header {
+  display: flex;
+  width: 70vw;
+  justify-content: space-between;
+  font-family: inherit;
+  font-size: inherit;
+  padding: 10px 20px;
+  align-items: center;
+
+  &__nav {
+    display: flex;
+    gap: 25px;
+  }
+
+  &__instruments {
+    display: flex;
+    gap: 20px;
+  }
+
+  &__logo {
+    width: 130px;
+    height: 75px;
+    cursor: pointer;
+  }
+
+  &__active {
+    color: #2C2C54;
+  }
+
+  &__user {
+    position: relative;
+    cursor: pointer;
+  }
+}
+
+.dropdown {
+  position: absolute;
+  top: -10px;
+  left: 50px;
+  min-width: 180px;
+  background: #2a2a53;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  padding: 8px;
+  z-index: 1;
+  animation: slideDown 0.3s ease;
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 14px;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    color: #FFFFFF;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.06);
+      color: #FFFFFF;
+    }
+  }
+
+  &__item_danger {
+    color: #ff4d4f;
+
+    &:hover {
+      background: rgba(255, 77, 79, 0.1);
+      color: #ff7875;
+    }
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

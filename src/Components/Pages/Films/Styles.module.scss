@@ -1,0 +1,48 @@
+.films {
+  width: 70vw;
+  display: flex;
+  flex-direction: column;
+  font-family: inherit;
+  color: #ffffff;
+
+  &__title {
+    font-weight: 700;
+    font-size: 35px;
+    margin: 34px 0;
+  }
+
+  &__filters {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    background: #ffffff0d;
+    border-radius: 12px;
+    max-width: fit-content;
+    margin: 20px auto;
+  }
+
+  &__wishlist {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 20px;
+  }
+
+   &__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255, 255, 255, 0.5);
+
+    p {
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0 0 8px 0;
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    span {
+      font-size: 16px;
+    }
+   }
+}

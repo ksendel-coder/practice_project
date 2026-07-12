@@ -1,105 +1,33 @@
 import "../Styles/index.scss";
 import "./Styles.scss";
-import styles from "./Styles.module.scss";
-import { Button } from "../Components/UI/Button";
-import { Input } from "../Components/UI/Input";
-import { useState } from "react";
-import { Icon } from "../Components/UI/Icon";
-import { Card } from "../Components/UI/Card";
-import { ScrollToTop } from "../Components/UI/ScrollToTop";
-import { Checkbox } from "../Components/UI/Checkbox";
-import { Pagination } from "../Components/UI/Pagination";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { CreateUser } from "../Components/Pages/CreateUser";
 import { Login } from "../Components/Pages/Login/Login";
 import { UserProvider } from "../Contexts/UserContext";
 import ProtectedPages from "../Components/ProtectedPages";
-import { Header } from "../Components/Pages/Header/Header";
+import { Header } from "../Components/Widgets/Header/Header";
 import { Home } from "../Components/Pages/Home/Home";
-
-const genres = ['Все', 'Фантастика', 'Экшн', 'Драма', 'Комедия'];
-
-const initialFilters: Record<string, boolean> = {
-  Все: false,
-  Фантастика: false,
-  Экшн: false,
-  Драма: false,
-  Комедия: false,
-};
-
-function HomePage() {
-  const [search, setSearch] = useState('');
-  const [filters, setFilters] = useState(initialFilters);
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPage = 10;
-
-  const toggleFilter = (genre: string) => {
-    setFilters(prev => ({ ...prev, [genre]: !prev[genre] }));
-  };
-
-  return (
-    <>
-      <div className={styles.block}>
-        <Button color="primary" size="main" radius={5}>
-          Посмотреть каталог фильмов
-        </Button>
-        <Button color="transparent" size="nav">
-          Новости
-        </Button>
-        <Input 
-          placeholder="Введите для поиска..." 
-          value={search} 
-          onChange={setSearch}
-        />
-        <Icon name="search"/>
-        <Icon name="user"/>
-      </div>
-
-      <div className={styles.card}>
-        <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
-        <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
-        <Card image='https://www.kino-teatr.ru/movie/poster/18598/124134.jpg'/>
-      </div>
-
-      <Card 
-        size='long' 
-        image='https://i.amediateka.tech/resize/1920x960/_stor_/cms/content-contentasset/8/3a/5817f125101583fc94c8c3f70c08783a-10160-a9d6d5c8396645688d71203ed100f40a.jpg'
-      />
-
-      <div className="buttonScroll"><ScrollToTop /></div>
-
-      <div className={styles.filters}>
-        {genres.map(genre => (
-          <Checkbox 
-            key={genre}
-            label={genre}
-            isActive={filters[genre]}
-            onChange={() => toggleFilter(genre)}
-          />
-        ))}
-      </div>
-
-      <Pagination
-        currentPage={currentPage}
-        totalPage={totalPage}
-        onChange={setCurrentPage}
-      />
-    </>
-  );
-}
-
-
+import { Footer } from "../Components/Widgets/Footer/Footer";
+import { Films } from "../Components/Pages/Films/Films";
 
 function AppComponent() {
   return (
     <UserProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<WrappPages/>}>
-          <Route index element={<Home/>}/>
-            <Route path="/login" element={<Login />} />
+          <Route path="/" element={<WrappPages />}>
+            <Route index element={<Home />} />
+            <Route
+              path="/films"
+              element={
+                <ProtectedPages>
+                  <Films />
+                </ProtectedPages>
+              }
+            />
           </Route>
-          <Route path="/CreateUser" element={<CreateUser />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/createUser" element={<CreateUser />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>
@@ -107,12 +35,13 @@ function AppComponent() {
 }
 
 function WrappPages() {
-  return(
+  return (
     <>
-    <Header/>
-    <Outlet/>
+      <Header />
+      <Outlet />
+      <Footer />
     </>
-  )
+  );
 }
 
 export const App = AppComponent;

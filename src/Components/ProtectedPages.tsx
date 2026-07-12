@@ -1,13 +1,18 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { useUserContext } from '../Contexts/UserContext';
 
-function ProtectedPages() {
-  const { isAuth } = useUserContext();
-
-  if (isAuth) {
-    return <Navigate to="/login" replace />;
-  }
-  return <Outlet />;
+interface ProtectedPages {
+  children: React.ReactNode;
 }
 
-export default ProtectedPages;
+function ProtectedRoute({ children }: ProtectedPages) {
+  const { isAuth } = useUserContext();
+
+  if (!isAuth) {
+    return <Navigate to="/createUser" replace />;
+  }
+
+  return <>{children}</>;
+}
+
+export default ProtectedRoute;

@@ -1,0 +1,16 @@
+.info {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  line-height: 125%;
+  gap: 30px;
+  height: 100vh;
+  justify-content: center;
+
+  &__title {
+    font-size: 70px;
+    line-height: 100%;
+    margin-bottom: 15px;
+    font-weight: 700;
+  }
+}

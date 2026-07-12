@@ -1,0 +1,18 @@
+.container {
+  height: 100vh;
+
+  &__filmTop {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__card {
+    margin: 0 auto;
+  }
+  
+  &__title {
+    font-size: 35px;
+    font-weight: 700;
+    margin-bottom: 50px;
+  }
+}

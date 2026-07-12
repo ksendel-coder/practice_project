@@ -1,19 +1,21 @@
 import { memo } from 'react';
 import styles from './Styles.module.scss';
-import { Button } from '../Button';
+import { Button } from '../../UI/Button';
 import cn from 'classnames';
 
 interface CardProps {
   image?: string;
   size?: 'long' | 'main'; 
   className?: string;
+  title?: string;
 }
 
-function CardComponent({ image, size = 'main', className=""}: CardProps) {
+function CardComponent({ image, size = 'main', className="", title}: CardProps) {
   const buttonSize = size === 'long' ? 'long' : 'main';
   return (
     <div className={cn('card', styles.card, styles[`card_${size}`], className)}>
-      {image && <img src={image} alt="Постер фильма" className={cn('card-image', styles.image)} />} 
+      {image && <img src={image} alt={`Постер фильма ${title}`} className={cn('card-image', styles.image)} />} 
+      {title && <h3 className={styles.title}>{title}</h3>}
       <Button 
         size={buttonSize} 
         color="primary" 
