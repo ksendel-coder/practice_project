@@ -9,6 +9,7 @@ import { Header } from "../Components/Widgets/Header/Header";
 import { Home } from "../Components/Pages/Home/Home";
 import { Footer } from "../Components/Widgets/Footer/Footer";
 import { Films } from "../Components/Pages/Films/Films";
+import { Profile } from "../Components/Pages/Profile/Profile";
 
 function AppComponent() {
   return (
@@ -28,6 +29,7 @@ function AppComponent() {
           </Route>
           <Route path="/login" element={<Login />} />
           <Route path="/createUser" element={<CreateUser />} />
+          <Route path='/profile' element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </UserProvider>

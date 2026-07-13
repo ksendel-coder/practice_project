@@ -1,21 +1,43 @@
 import styles from "./Styles.module.scss";
 import { Input } from "../../UI/Input";
 import { Card } from "../../Layouts/Card";
-import { memo, useState, useMemo } from "react";
+import { memo, useState, useMemo, useEffect } from "react";
 import { Checkbox } from "../../UI/Checkbox";
 import { Pagination } from "../../UI/Pagination";
 import { ScrollToTop } from "../../UI/ScrollToTop";
-import { films, genres } from "../../../data/films";
+import { genres } from "../../../data/film";
+import { filmsAPI } from "../../../Api/server/films";
+
+interface Film {
+  _id: number;
+  title: string;
+  genre: string[];
+  image: string;
+}
 
 const count_items = 9;
 
 function FilmsComponent() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [films, setFilms] = useState<Film[]>([]);
 
   const [filters, setFilters] = useState<Record<string, boolean>>(
     Object.fromEntries(genres.map((g) => [g, false]))
   );
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      try {
+        const data = await filmsAPI.getAll();
+        console.log('✅ Загружено фильмов:', data.length);
+        setFilms(data);
+      } catch (error) {
+        console.error('❌ Ошибка загрузки фильмов:', error);
+      } 
+    };
+    fetchMovies();
+  }, []);
 
   const toggleFilter = (genre: string) => {
     setFilters((prev) => ({ ...prev, [genre]: !prev[genre] }));
@@ -34,7 +56,7 @@ function FilmsComponent() {
 
       return matchesSearch && matchesGenre;
     });
-  }, [search, filters]);
+  }, [search, filters, films]);
 
   const totalPages = Math.ceil(filteredMovies.length / count_items);
   const startIndex = (currentPage - 1) * count_items;
@@ -83,7 +105,7 @@ function FilmsComponent() {
         <>
           <div className={styles.films__wishlist}>
             {paginatedMovies.map((movie) => (
-              <Card key={movie.id} title={movie.title} image={movie.image} />
+              <Card key={movie._id} title={movie.title} image={movie.image} />
             ))}
           </div>
 

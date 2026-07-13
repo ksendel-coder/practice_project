@@ -6,9 +6,14 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { InferType } from "yup";
 import { Input } from "../../UI/Input";
 import { Button } from "../../UI/Button";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useUserContext } from "../../../Contexts/UserContext";
+import { authAPI } from '../../../Api/server/auth';
 
 function CreateUserComponent() {
+  const navigate = useNavigate();
+  const { setIsAuth, setUserData } = useUserContext();
+
   const createForm = useForm({
     resolver: yupResolver(createSchema),
     defaultValues: {
@@ -19,23 +24,52 @@ function CreateUserComponent() {
     },
   });
 
-  const onSubmit = (data: InferType<typeof createSchema>) => {
-    console.log(data);
+  const onSubmit = async (data: InferType<typeof createSchema>) => {
+    try {
+      // 🔹 Запрос к API
+      const response = await authAPI.register({
+        username: data.username,
+        email: data.email,
+        password: data.password,
+      });
+
+      console.log('Ответ сервера:', response);
+
+      // 🔹 Если успешно
+      if (response.ok) {
+        // Сохраняем токен
+        localStorage.setItem('token', response.token);
+        
+        // Обновляем контекст
+        setUserData({
+          name: response.user.username,
+          email: response.user.email || '',
+          bio: '',
+        });
+        setIsAuth(true);
+        
+        navigate('/');
+      } else {
+        alert(response.message || 'Ошибка регистрации');
+      }
+    } catch (error) {
+      console.error('Ошибка регистрации:', error);
+      alert('Ошибка сервера');
+    }
   };
 
   return (
     <div className={styles.container}>
       <form className={styles.container_form} onSubmit={createForm.handleSubmit(onSubmit)}>
-        <h2 className={styles.container_title}>{'Создание аккаунта'}</h2>
+        <h2 className={styles.container_title}>Создание аккаунта</h2>
+
         <Controller
           name="email"
           control={createForm.control}
           render={({ field }) => (
             <Input
-              name="{field.name}"
+              {...field}
               type="email"
-              value={field.value}
-              onChange={field.onChange}
               error={createForm.formState.errors.email?.message}
               placeholder="Электронная почта"
             />
@@ -47,10 +81,8 @@ function CreateUserComponent() {
           control={createForm.control}
           render={({ field }) => (
             <Input
-              name={field.name}
+              {...field}
               type="text"
-              value={field.value}
-              onChange={field.onChange}
               error={createForm.formState.errors.username?.message}
               placeholder="Имя пользователя"
             />
@@ -62,12 +94,10 @@ function CreateUserComponent() {
           control={createForm.control}
           render={({ field }) => (
             <Input
-              name={field.name}
-              value={field.value}
-              onChange={field.onChange}
+              {...field}
+              type="password"
               error={createForm.formState.errors.password?.message}
               placeholder="Пароль"
-              type="password"
             />
           )}
         />
@@ -87,7 +117,7 @@ function CreateUserComponent() {
 
         <div className={styles.container_buttons}>
           <Button type="submit" size="main" color="primary">
-            {'Создать'}
+            Создать
           </Button>
           <div className={styles.container_loginLink}>
             Уже есть аккаунт? <Link to="/login">Войти</Link>
