@@ -15,6 +15,7 @@ interface UserContextValue {
   setIsAuth: (value: boolean) => void;
   setUserData: (data: UserData) => void;
   logout: () => void;
+  loadUserData: () => void;
 }
 
 const UserContext = createContext<UserContextValue | undefined>(undefined);
@@ -26,19 +27,31 @@ export function UserProvider({ children }: { children: ReactNode }) {
   
   const isAuth = token !== null;
 
+  const loadUserData = () => {
+  const saved = localStorage.getItem('userData');
+  if (saved) {
+    try {
+      const data = JSON.parse(saved);
+      setUserData(data);
+    } catch {
+      setUserData(null);
+    }
+  } 
+};
+
   const setIsAuth = (value: boolean) => {
     if (value) {
       setToken('fake-token-123');
+      loadUserData();
     } else {
       setToken(null);
-      setUserData(null);
     }
   };
 
   const logout = () => {
     setToken(null);
-    setUserData(null);
     setIsAdmin(false);
+    // 🔹 userData остаётся в localStorage и контексте!
   };
 
   return (
@@ -49,7 +62,8 @@ export function UserProvider({ children }: { children: ReactNode }) {
       setIsAdmin, 
       setIsAuth, 
       setUserData,
-      logout 
+      logout,
+      loadUserData
     }}>
       {children}
     </UserContext.Provider>

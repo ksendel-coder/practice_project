@@ -10,7 +10,9 @@ function PopularSectionComponent() {
         <h2 className={styles.container__title}>
           Самый популярный фильм на неделе
         </h2>
-        <Link to={""}>Посмотреть остальные фильмы</Link>
+        <div className={styles.container__filmLink}>
+          <Link to="/films">Посмотреть остальные фильмы</Link>
+        </div>
       </div>
       <Card
         size="long"

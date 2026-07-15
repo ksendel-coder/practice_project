@@ -1,27 +1,42 @@
-import { memo } from 'react';
-import styles from './Styles.module.scss';
-import { Button } from '../../UI/Button';
-import cn from 'classnames';
+import { memo, ReactNode } from "react";
+import styles from "./Styles.module.scss";
+import { Button } from "../../UI/Button";
+import cn from "classnames";
 
 interface CardProps {
   image?: string;
-  size?: 'long' | 'main'; 
+  size?: "long" | "main";
   className?: string;
   title?: string;
+  children?: ReactNode;
+  hideButton?: boolean;
 }
 
-function CardComponent({ image, size = 'main', className="", title}: CardProps) {
-  const buttonSize = size === 'long' ? 'long' : 'main';
+function CardComponent({
+  image,
+  size = "main",
+  className = "",
+  title,
+  children,
+  hideButton = false,
+}: CardProps) {
+  const buttonSize = size === "long" ? "long" : "main";
   return (
-    <div className={cn('card', styles.card, styles[`card_${size}`], className)}>
-      {image && <img src={image} alt={`Постер фильма ${title}`} className={cn('card-image', styles.image)} />} 
+    <div className={cn(styles.card, styles[`card_${size}`], className)}>
+      {image && (
+        <img
+          src={image}
+          alt={`Постер фильма ${title}`}
+          className={cn("card-image", styles.image)}
+        />
+      )}
       {title && <h3 className={styles.title}>{title}</h3>}
-      <Button 
-        size={buttonSize} 
-        color="primary" 
-        radius={5}>
-        Посмотреть
-      </Button>
+      {children}
+      {!hideButton && (
+        <Button size={buttonSize} color="primary" radius={5}>
+          Посмотреть
+        </Button>
+      )}
     </div>
   );
 }

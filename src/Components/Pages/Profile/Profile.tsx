@@ -8,14 +8,12 @@ import { profileSchema } from "./schema";
 import { InferType } from "yup";
 import { useUserContext } from "../../../Contexts/UserContext";
 
-type ProfileFormData = InferType<typeof profileSchema>;
-
 function ProfileComponent() {
   const { userData, setUserData } = useUserContext();
   const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
-  const profileForm = useForm<ProfileFormData>({
+  const profileForm = useForm<InferType<typeof profileSchema>>({
     resolver: yupResolver(profileSchema),
     defaultValues: {
       username: userData?.name || "",
@@ -24,44 +22,71 @@ function ProfileComponent() {
     },
   });
 
-  const onSubmit = (data: ProfileFormData) => {
+  const onSubmit = (data: InferType<typeof profileSchema>) => {
     setIsLoading(true);
-    setSuccessMessage("");
 
     setTimeout(() => {
-      // 🔹 Обновляем данные в контексте
       setUserData({
         name: data.username,
         email: data.email,
         bio: data.bio || "",
       });
 
-      // 🔹 Обновляем данные в localStorage
-      const savedUser = localStorage.getItem('user');
+      const savedUser = localStorage.getItem("user");
       if (savedUser) {
         const user = JSON.parse(savedUser);
-        localStorage.setItem('user', JSON.stringify({
-          ...user,
-          username: data.username,
-          email: data.email,
-          bio: data.bio || "",
-        }));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...user,
+            username: data.username,
+            email: data.email,
+            bio: data.bio || "",
+          }),
+        );
       }
-
       setIsLoading(false);
-      setSuccessMessage("✅ Профиль успешно обновлён!");
-      setTimeout(() => setSuccessMessage(""), 3000);
+      setIsEditing(false);
     }, 1000);
+  };
+
+  const handleCancel = () => {
+    profileForm.reset({
+      username: userData?.name || "",
+      email: userData?.email || "",
+      bio: userData?.bio || "",
+    });
+    setIsEditing(false);
   };
 
   return (
     <div className={styles.container}>
-      <form className={styles.container_form} onSubmit={profileForm.handleSubmit(onSubmit)}>
-        <h2 className={styles.container_title}>Профиль</h2>
-
-        {successMessage && (
-          <div className={styles.successMessage}>{successMessage}</div>
-        )}
+      <form
+        className={styles.container__form}
+        onSubmit={profileForm.handleSubmit(onSubmit)}
+      >
+        <h2 className={styles.container__form_title}>Профиль</h2>
+        <div className={styles.container__form_navbutton}>
+          {!isEditing ? (
+            <Button
+              size="nav"
+              color="transparent"
+              radius={8}
+              onClick={() => setIsEditing(true)}
+            >
+              Редактировать
+            </Button>
+          ) : (
+            <Button
+              size="nav"
+              color="transparent"
+              radius={8}
+              onClick={handleCancel}
+            >
+              Отмена
+            </Button>
+          )}
+        </div>
 
         <Controller
           name="username"
@@ -72,6 +97,7 @@ function ProfileComponent() {
               type="text"
               error={profileForm.formState.errors.username?.message}
               placeholder="Ник"
+              disabled={!isEditing}
             />
           )}
         />
@@ -85,6 +111,7 @@ function ProfileComponent() {
               type="email"
               error={profileForm.formState.errors.email?.message}
               placeholder="Электронная почта"
+              disabled={!isEditing}
             />
           )}
         />
@@ -93,17 +120,25 @@ function ProfileComponent() {
           name="bio"
           control={profileForm.control}
           render={({ field }) => (
-            <Input
+            <textarea
               {...field}
-              error={profileForm.formState.errors.bio?.message}
+              rows={5}
+              className={`${styles.textarea} ${!isEditing ? styles.textareaDisabled : ""}`}
               placeholder="О себе"
+              disabled={!isEditing}
             />
           )}
         />
 
-        <div className={styles.container_buttons}>
-          <Button type="submit" size="main" color="primary">
-            {isLoading ? "Сохраняем..." : "💾 Сохранить"}
+        <div className={styles.container__form_button}>
+          <Button
+            type="submit"
+            size="main"
+            color="primary"
+            radius={12}
+            disabled={!isEditing}
+          >
+            {isLoading ? "Сохраняем..." : "Сохранить"}
           </Button>
         </div>
       </form>

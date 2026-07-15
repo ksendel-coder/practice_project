@@ -10,6 +10,7 @@ interface ButtonProps {
   type?: 'button' | 'submit' | 'reset';
   radius?: number;
   className?: string;
+  disabled?: boolean;
 }
 
 function ButtonComponent({
@@ -20,6 +21,7 @@ function ButtonComponent({
   type = 'button',
   radius,
   className='',
+  disabled,
 }: ButtonProps) {
   return (
     <button
@@ -27,6 +29,7 @@ function ButtonComponent({
       onClick={onClick}
       type={type}
       className={cn(styles.button, styles[`button_${color}`], styles[`button_${size}`], className)}
+      disabled={disabled}
     >
       {children}
     </button>

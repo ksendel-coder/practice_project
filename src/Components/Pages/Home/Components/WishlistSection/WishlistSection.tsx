@@ -8,9 +8,9 @@ function WishlistSectionComponent() {
     <div className={styles.container}>
       <div className={styles.container__films}>
         <h2 className={styles.container__title}>Вы хотели посмотреть</h2>
-        <Link to={""}>
-          <p>Полный список</p>
-        </Link>
+        <div className={styles.container__filmLink}>
+          <Link to="/films">Полный список</Link>
+        </div>
       </div>
       <div className={styles.container__wishlist}>
         <Card image="https://www.kino-teatr.ru/movie/poster/18598/124134.jpg" />

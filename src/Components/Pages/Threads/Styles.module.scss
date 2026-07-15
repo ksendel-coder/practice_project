@@ -1,0 +1,30 @@
+.threads {
+  width: 85vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  font-family: inherit;
+  color: #ffffff;
+  font-size: 15px;
+
+  &__card {
+    width: 800px;
+    padding: 5px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
+    &__post {
+      margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      &___title {
+        margin-bottom: auto;
+        font-size: 16px;
+      }
+    }
+  }
+}

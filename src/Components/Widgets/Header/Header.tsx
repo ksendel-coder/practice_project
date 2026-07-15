@@ -64,6 +64,15 @@ function HeaderComponent() {
             Фильмы
           </Button>
         </Link>
+        <Link to="/threads">
+          <Button
+            size="nav"
+            color="transparent"
+            className={isActive("/threds") ? styles.header__active : ""}
+          >
+            Треды
+          </Button>
+        </Link>
       </nav>
 
       <div className={styles.header__instruments}>

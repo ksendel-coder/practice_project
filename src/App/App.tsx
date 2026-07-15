@@ -10,6 +10,7 @@ import { Home } from "../Components/Pages/Home/Home";
 import { Footer } from "../Components/Widgets/Footer/Footer";
 import { Films } from "../Components/Pages/Films/Films";
 import { Profile } from "../Components/Pages/Profile/Profile";
+import { Threads } from "../Components/Pages/Threads/Threads";
 
 function AppComponent() {
   return (
@@ -23,6 +24,14 @@ function AppComponent() {
               element={
                 <ProtectedPages>
                   <Films />
+                </ProtectedPages>
+              }
+            />
+            <Route
+              path="/threads"
+              element={
+                <ProtectedPages>
+                  <Threads />
                 </ProtectedPages>
               }
             />

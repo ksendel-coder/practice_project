@@ -1,26 +1,26 @@
 import { memo } from "react";
-import styles from './Styles.module.scss';
-import { useForm, Controller } from 'react-hook-form';
+import styles from "./Styles.module.scss";
+import { useForm, Controller } from "react-hook-form";
 import { createSchema } from "./schema";
-import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType } from "yup";
 import { Input } from "../../UI/Input";
 import { Button } from "../../UI/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../Contexts/UserContext";
-import { authAPI } from '../../../Api/server/auth';
+import { authAPI } from "../../../Api/server/auth";
 
 function CreateUserComponent() {
   const navigate = useNavigate();
-  const { setIsAuth, setUserData } = useUserContext();
+  const { setIsAuth, loadUserData } = useUserContext();
 
   const createForm = useForm({
     resolver: yupResolver(createSchema),
     defaultValues: {
-      email: '',
-      username: '',
-      password: '',
-      confirmPassword: '',
+      email: "",
+      username: "",
+      password: "",
+      confirmPassword: "",
     },
   });
 
@@ -33,34 +33,41 @@ function CreateUserComponent() {
         password: data.password,
       });
 
-      console.log('Ответ сервера:', response);
+      console.log("Ответ сервера:", response);
 
       // 🔹 Если успешно
       if (response.ok) {
         // Сохраняем токен
-        localStorage.setItem('token', response.token);
-        
+        localStorage.setItem("token", response.token);
+
         // Обновляем контекст
-        setUserData({
-          name: response.user.username,
-          email: response.user.email || '',
-          bio: '',
-        });
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            name: response.user.username,
+            email: response.user.email || "",
+            bio: "",
+          }),
+        );
+        loadUserData();
         setIsAuth(true);
-        
-        navigate('/');
+
+        navigate("/");
       } else {
-        alert(response.message || 'Ошибка регистрации');
+        alert(response.message || "Ошибка регистрации");
       }
     } catch (error) {
-      console.error('Ошибка регистрации:', error);
-      alert('Ошибка сервера');
+      console.error("Ошибка регистрации:", error);
+      alert("Ошибка сервера");
     }
   };
 
   return (
     <div className={styles.container}>
-      <form className={styles.container_form} onSubmit={createForm.handleSubmit(onSubmit)}>
+      <form
+        className={styles.container_form}
+        onSubmit={createForm.handleSubmit(onSubmit)}
+      >
         <h2 className={styles.container_title}>Создание аккаунта</h2>
 
         <Controller
