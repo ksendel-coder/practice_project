@@ -2,9 +2,11 @@ import { createContext, useState, ReactNode, useContext } from 'react';
 import { useLocalStorage } from '../Hooks/useLocalStorage';
 
 interface UserData {
+  _id?: number;
   name: string;
   email: string;
   bio: string;
+  avatar?: string | null;
 }
 
 interface UserContextValue {
@@ -21,37 +23,59 @@ interface UserContextValue {
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [token, setToken] = useLocalStorage<string | null>('token', null);
   const [userData, setUserData] = useLocalStorage<UserData | null>('userData', null);
   const [isAdmin, setIsAdmin] = useState(false);
-  
-  const isAuth = token !== null;
+  const [isAuth, setIsAuthState] = useState(() => {
+    return localStorage.getItem('token') !== null;
+  });
 
   const loadUserData = () => {
-  const saved = localStorage.getItem('userData');
-  if (saved) {
-    try {
-      const data = JSON.parse(saved);
-      setUserData(data);
-    } catch {
-      setUserData(null);
+    const saved = localStorage.getItem('userData');
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        setUserData({
+          _id: data._id || 1,
+          name: data.name || '',
+          email: data.email || '',
+          bio: data.bio || '',
+          avatar: data.avatar || null,
+        });
+      } catch {
+        setUserData(null);
+      }
     }
-  } 
-};
+  };
 
   const setIsAuth = (value: boolean) => {
     if (value) {
-      setToken('fake-token-123');
+      const token = localStorage.getItem('token');
+      if (!token || token === 'fake-token-123') {
+        const saved = localStorage.getItem('userData');
+        if (saved) {
+          try {
+            const user = JSON.parse(saved);
+            const userId = user._id || 1;
+            localStorage.setItem('token', `mock-token-${userId}`);
+          } catch {
+            localStorage.setItem('token', 'mock-token-1');
+          }
+        } else {
+          localStorage.setItem('token', 'mock-token-1');
+        }
+      }
+      setIsAuthState(true);
       loadUserData();
     } else {
-      setToken(null);
+      localStorage.removeItem('token');
+      setIsAuthState(false); 
     }
   };
 
   const logout = () => {
-    setToken(null);
+    localStorage.removeItem('token');
+    setIsAuthState(false);  
     setIsAdmin(false);
-    // 🔹 userData остаётся в localStorage и контексте!
   };
 
   return (

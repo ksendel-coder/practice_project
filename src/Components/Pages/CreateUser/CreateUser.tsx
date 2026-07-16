@@ -37,21 +37,19 @@ function CreateUserComponent() {
 
       // 🔹 Если успешно
       if (response.ok) {
-        // Сохраняем токен
         localStorage.setItem("token", response.token);
-
-        // Обновляем контекст
         localStorage.setItem(
           "userData",
           JSON.stringify({
+            _id: response.user._id,
             name: response.user.username,
             email: response.user.email || "",
             bio: "",
+            avatar: null,
           }),
         );
         loadUserData();
         setIsAuth(true);
-
         navigate("/");
       } else {
         alert(response.message || "Ошибка регистрации");

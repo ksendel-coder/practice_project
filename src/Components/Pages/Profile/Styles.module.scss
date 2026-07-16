@@ -19,6 +19,14 @@
       box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
     }
 
+    &_header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
     &_title {
       font-family: inherit;
       font-size: 28px;
@@ -36,10 +44,75 @@
     }
 
     &_navbutton {
-  font-size: 14px;
-  margin-left: auto;
+      font-size: 14px;
+      margin-left: auto;
     }
   }
+}
+
+// 🔹 Аватар
+.avatarSection {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.avatarWrapper {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:hover .avatarOverlay {
+    opacity: 1;
+  }
+}
+
+.avatarImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.avatarPlaceholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatarOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: #ffffff;
+  font-size: 12px;
+  font-family: 'Nunito', sans-serif;
+  cursor: pointer;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.fileInput {
+  display: none;
 }
 
 .textarea {
@@ -47,9 +120,9 @@
   background: rgba(255, 255, 255, 0.05);
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
-  color: #FFFFFF;
+  color: #ffffff;
   font-size: 16px;
-  font-family: 'Nunito', sans-serif;
+  font-family: "Nunito", sans-serif;
   outline: none;
   transition: all 0.3s ease;
   resize: vertical;
@@ -58,7 +131,7 @@
   box-sizing: border-box;
 
   &:focus:not(:disabled) {
-    border-color: #686DE0;
+    border-color: #686de0;
     background: rgba(255, 255, 255, 0.08);
     box-shadow: 0 0 0 4px rgba(104, 109, 224, 0.15);
   }
@@ -71,4 +144,23 @@
 .textareaDisabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+
+.passwordSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.changePasswordBtn {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  text-align: left;
+  padding: 0;
+
+  &:hover {
+    color: #686DE0;
+  }
 }

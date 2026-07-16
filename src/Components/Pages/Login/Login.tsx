@@ -14,7 +14,7 @@ import { authAPI } from "../../../Api/server/auth";
 function LoginComponent() {
   const navigate = useNavigate();
   const { setIsAuth, loadUserData } = useUserContext();
-  
+
   const loginForm = useForm({
     resolver: yupResolver(loginSchema),
     defaultValues: {
@@ -30,26 +30,29 @@ function LoginComponent() {
         username: data.username,
         password: data.password,
       });
-      console.log(res);
+      console.log("Ответ сервера:", res);
 
       if (res.ok) {
         localStorage.setItem("token", res.token);
-        if (!localStorage.getItem("userData")) {
-          localStorage.setItem(
-            "userData",
-            JSON.stringify({
-              name: res.user.username,
-              email: res.user.email || "",
-              bio: "",
-            }),
-          );
-        }
+
+        // 🔹 Сохраняем данные с сервера (включая bio и avatar)
+        localStorage.setItem(
+          "userData",
+          JSON.stringify({
+            _id: res.user._id,
+            name: res.user.username,
+            email: res.user.email || "",
+            bio: res.user.bio || "", // ← с сервера!
+            avatar: res.user.avatar || null, // ← с сервера!
+          }),
+        );
+
         loadUserData();
         setIsAuth(true);
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
+      console.error("Ошибка входа:", error);
     }
   };
 
