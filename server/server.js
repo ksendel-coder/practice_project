@@ -152,6 +152,7 @@ app.put("/api/users/profile", (req, res) => {
   if (email) user.email = email;
   if (bio !== undefined) user.bio = bio;
   if (avatar !== undefined) user.avatar = avatar;
+  
   writeDB(db);
 
   res.json({
