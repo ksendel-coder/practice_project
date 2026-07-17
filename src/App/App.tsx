@@ -13,11 +13,12 @@ import { Films } from "../Components/Pages/Films/Films";
 import { Profile } from "../Components/Pages/Profile/Profile";
 import { Threads } from "../Components/Pages/Threads/Threads";
 
+const basename = import.meta.env.PROD ? '/multiCinema-production' : '';
 function AppComponent() {
   return (
     <SearchProvider>
       <UserProvider>
-        <BrowserRouter >
+        <BrowserRouter basename={basename}>
           <Routes>
             <Route path="/" element={<WrappPages />}>
               <Route index element={<Home />} />
