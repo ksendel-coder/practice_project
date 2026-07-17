@@ -9,6 +9,7 @@ import { genres } from "../../../data/film";
 import { filmsAPI } from "../../../Api/films";
 import { useSearch } from "../../../Contexts/SearchContext";
 import { VideoModal } from "../../UI/VideoModal/VideoModal";
+import { Loader } from "../../UI/Loader";
 
 export interface Film {
   _id: number;
@@ -30,15 +31,19 @@ function FilmsComponent() {
   const [filters, setFilters] = useState<Record<string, boolean>>(
     Object.fromEntries(genres.map((g) => [g, false])),
   );
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchMovies = async () => {
+      setLoading(true);
       try {
         const data = await filmsAPI.getAll();
         console.log("Загружено фильмов:", data.length);
         setFilms(data);
       } catch (error) {
         console.error(error);
+      } finally {
+        setLoading(false);
       }
     };
     fetchMovies();
@@ -95,6 +100,12 @@ function FilmsComponent() {
     toggleFilter(genre);
     setCurrentPage(1);
   };
+
+  if (loading) {
+  return (
+      <Loader />
+  );
+}
 
   return (
     <section className={styles.films}>

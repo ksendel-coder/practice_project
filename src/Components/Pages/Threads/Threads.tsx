@@ -7,6 +7,7 @@ import { Icon } from "../../UI/Icon";
 import { useUserContext } from "../../../Contexts/UserContext";
 import { threadsAPI } from "../../../Api/threads";
 import { ScrollToTop } from "../../UI/ScrollToTop";
+import { Loader } from "../../UI/Loader";
 
 export interface Post {
   _id: number;
@@ -122,7 +123,9 @@ function ThreadsComponent() {
   };
 
   if (loading) {
-    return <div className={styles.threads__loading}>Загрузка...</div>;
+    return (
+        <Loader />
+    );
   }
 
   return (
