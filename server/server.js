@@ -26,6 +26,10 @@ const writeDB = (data) => {
   fs.writeFileSync(db_path, JSON.stringify(data, null, 2));
 };
 
+app.get('/', (req, res) => {
+  res.send('Сервер работает! 🚀');
+});
+
 const generateId = (items) => {
   const maxId = items.reduce((max, item) => Math.max(max, item._id || 0), 0);
   return maxId + 1;
