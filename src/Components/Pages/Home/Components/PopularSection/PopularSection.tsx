@@ -1,23 +1,58 @@
 import { Link } from "react-router-dom";
-import styles from "./Styles.module.scss";
+import { memo, useState, useEffect } from "react";
 import { Card } from "../../../../Layouts/Card";
-import { memo } from "react";
+import { filmsAPI } from "../../../../../Api/films";
+import styles from "./Styles.module.scss";
+import { Film } from "../../../Films/Films";
 
-function PopularSectionComponent() {
+interface PopularSectionProps {
+  onView?: (movie: Film) => void;
+}
+
+function PopularSectionComponent({ onView }: PopularSectionProps) {
+  const [popularMovie, setPopularMovie] = useState<Film | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchPopular = async () => {
+      try {
+        const data = await filmsAPI.getAll();
+        if (data.length > 0) {
+          setPopularMovie(data[0]);
+        }
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPopular();
+  }, []);
+
+  if (loading) {
+    return <div className={styles.loading}>Загрузка...</div>;
+  }
+
+  if (!popularMovie) {
+    return <div className={styles.empty}>Нет фильмов</div>;
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.container__filmTop}>
         <h2 className={styles.container__title}>
           Самый популярный фильм на неделе
         </h2>
-        <div className={styles.container__filmLink}>
-          <Link to="/films">Посмотреть остальные фильмы</Link>
-        </div>
+        <Link to="/films" className={styles.container__filmLink}>
+          Посмотреть остальные фильмы
+        </Link>
       </div>
       <Card
         size="long"
         className={styles.container__card}
-        image="https://i.amediateka.tech/resize/1920x960/_stor_/cms/content-contentasset/8/3a/5817f125101583fc94c8c3f70c08783a-10160-a9d6d5c8396645688d71203ed100f40a.jpg"
+        title={popularMovie.title}
+        image={popularMovie.image}
+        onView={() => onView?.(popularMovie)}
       />
     </div>
   );

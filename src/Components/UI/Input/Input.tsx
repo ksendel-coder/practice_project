@@ -26,11 +26,10 @@ function InputComponent({
 }: InputProps) {
   return (
     <div className={cn(styles.wrapper, className)}>
-      {label && <label className={styles.label}>{label}</label>}
-
+      {label && <label className={styles.wrapper__label}>{label}</label>}
       <input
         type={type}
-        className={cn(styles.input, {
+        className={cn(styles.wrapper__input, {
           [styles.error]: error,  
         })}
         placeholder={placeholder}
@@ -39,7 +38,7 @@ function InputComponent({
         disabled={disabled}
       />
       {}
-      {error && <p className={styles.errorText}>{error}</p>}
+      {error && <p className={styles.wrapper__error}>{error}</p>}
     </div>
   );
 }

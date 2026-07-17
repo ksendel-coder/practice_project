@@ -1,10 +1,13 @@
-import { RefObject, useEffect, useRef } from 'react';
+import { RefObject, useEffect, useRef } from "react";
 
 const useOutsideClick = (
-  target: React.RefObject<HTMLElement> | RefObject<HTMLDivElement | null> | undefined,
+  target:
+    | React.RefObject<HTMLElement>
+    | RefObject<HTMLDivElement | null>
+    | undefined,
   handler: (event: MouseEvent) => void,
-  options = ['button', 'a[href]'],
-  isActive?: boolean | undefined
+  options = ["button", "a[href]"],
+  isActive?: boolean | undefined,
 ) => {
   const isFirstClick = useRef(true);
 
@@ -20,7 +23,9 @@ const useOutsideClick = (
         return;
       }
 
-      const isExcluded = options.some(selector => (event.target as Element)?.closest(selector));
+      const isExcluded = options.some((selector) =>
+        (event.target as Element)?.closest(selector),
+      );
 
       if (isExcluded) {
         return;
@@ -28,10 +33,10 @@ const useOutsideClick = (
       handler(event);
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
       isFirstClick.current = true;
     };
   }, [target, handler, options, isActive]);

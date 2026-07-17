@@ -8,7 +8,7 @@ import { profileSchema } from "./schema";
 import { InferType } from "yup";
 import { useUserContext } from "../../../Contexts/UserContext";
 import { Icon } from "../../UI/Icon";
-import { authAPI } from "../../../Api/server/auth";  // ← добавить
+import { authAPI } from "../../../Api/auth";
 
 function ProfileComponent() {
   const { userData, setUserData } = useUserContext();
@@ -48,20 +48,22 @@ function ProfileComponent() {
 
   const onSubmit = async (data: InferType<typeof profileSchema>) => {
     setIsLoading(true);
-
     try {
-      // 🔹 Обновляем профиль на сервере
-      const response = await authAPI.updateProfile({
+      if (data.newPassword) {
+        console.log("Смена пароля на:", data.newPassword);
+        await authAPI.changePassword(data.newPassword);
+        console.log("Пароль обновлён на сервере");
+      }
+
+      const res = await authAPI.updateProfile({
         name: data.username,
         email: data.email,
         bio: data.bio || "",
         avatar: avatar || undefined,
       });
+      console.log(res);
 
-      console.log('📦 Ответ сервера:', response);
-
-      if (response.ok) {
-        // 🔹 Обновляем localStorage
+      if (res.ok) {
         const savedUser = localStorage.getItem("userData");
         if (savedUser) {
           const user = JSON.parse(savedUser);
@@ -72,17 +74,17 @@ function ProfileComponent() {
             bio: data.bio || "",
             avatar: avatar || null,
           };
+          if (data.newPassword) {
+            newData.password = data.newPassword;
+          }
           localStorage.setItem("userData", JSON.stringify(newData));
         }
-
-        // 🔹 Обновляем контекст
         setUserData({
           name: data.username,
           email: data.email,
           bio: data.bio || "",
           avatar: avatar || undefined,
         });
-
         setIsLoading(false);
         setIsEditing(false);
         setShowPasswordFields(false);
@@ -93,14 +95,11 @@ function ProfileComponent() {
           newPassword: "",
           confirmNewPassword: "",
         });
-        
-        alert('✅ Профиль обновлён!');
       } else {
-        alert(response.message || 'Ошибка обновления');
         setIsLoading(false);
       }
     } catch (error) {
-      console.error('❌ Ошибка:', error);
+      console.error(error);
       setIsLoading(false);
     }
   };
@@ -142,21 +141,28 @@ function ProfileComponent() {
           </div>
         </div>
 
-        <div className={styles.avatarSection}>
+        <div className={styles.avatar}>
           <div
-            className={styles.avatarWrapper}
+            className={styles.avatar__wrapper}
             onClick={handleAvatarClick}
-            style={{ cursor: isEditing ? "pointer" : "default" }}
+            style={{
+              cursor: isEditing ? "pointer" : "default",
+              pointerEvents: isEditing ? "auto" : "none",
+            }}
           >
             {avatar ? (
-              <img src={avatar} alt="Аватар" className={styles.avatarImage} />
+              <img
+                src={avatar}
+                alt="Аватар"
+                className={styles.avatar__wrapper_image}
+              />
             ) : (
-              <div className={styles.avatarPlaceholder}>
-                <Icon name="user" size={48} color="rgba(255,255,255,0.3)" />
+              <div className={styles.avatar__wrapper_placeholder}>
+                <Icon name="user" size={48} color="#ffffff4d" />
               </div>
             )}
             {isEditing && (
-              <div className={styles.avatarOverlay}>
+              <div className={styles.avatar__wrapper_overlay}>
                 <Icon name="edit" />
               </div>
             )}
@@ -166,7 +172,7 @@ function ProfileComponent() {
             type="file"
             accept="image/*"
             onChange={handleAvatarUpload}
-            className={styles.fileInput}
+            className={styles.container__form_input}
           />
         </div>
 
@@ -205,7 +211,7 @@ function ProfileComponent() {
             <textarea
               {...field}
               rows={5}
-              className={`${styles.textarea} ${!isEditing ? styles.textareaDisabled : ""}`}
+              className={`${styles.container__form_textarea} ${!isEditing ? styles.container__form_textareaDisabled : ""}`}
               placeholder="О себе"
               disabled={!isEditing}
             />
@@ -213,13 +219,13 @@ function ProfileComponent() {
         />
 
         {isEditing && (
-          <div className={styles.passwordSection}>
+          <div className={styles.password}>
             <Button
               type="button"
               size="nav"
               color="transparent"
               onClick={() => setShowPasswordFields(!showPasswordFields)}
-              className={styles.changePasswordBtn}
+              className={styles.password__change}
             >
               {showPasswordFields ? "Скрыть" : "Сменить пароль"}
             </Button>

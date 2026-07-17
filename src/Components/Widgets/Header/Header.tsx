@@ -4,6 +4,7 @@ import { Button } from "../../UI/Button/Button";
 import { Input } from "../../UI/Input/Input";
 import { Icon } from "../../UI/Icon/Icon";
 import { useUserContext } from "../../../Contexts/UserContext";
+import { useSearch } from "../../../Contexts/SearchContext";
 import styles from "./Styles.module.scss";
 import logo from "/logo.png";
 import useOutsideClick from "../../../Hooks/useClickOutside";
@@ -14,8 +15,8 @@ function HeaderComponent() {
   const location = useLocation();
   const navigate = useNavigate();
   const { isAuth, logout } = useUserContext();
+  const { performSearch } = useSearch();
   const dropdownRef = useRef<HTMLDivElement>(null);
-
   const isActive = (path: string) => location.pathname === path;
 
   const handleLogout = () => {
@@ -41,11 +42,18 @@ function HeaderComponent() {
     }
   };
 
+  const handleSearchClick = () => {
+    if (search.trim()) {
+      performSearch(search.trim());
+      navigate("/films");
+    }
+  };
+
   useOutsideClick(
     dropdownRef,
     () => setIsDropdownOpen(false),
     ["button", "a[href]"],
-    isDropdownOpen
+    isDropdownOpen,
   );
 
   return (
@@ -53,7 +61,6 @@ function HeaderComponent() {
       <Link to="/">
         <img src={logo} className={styles.header__logo} alt="Logo" />
       </Link>
-
       <nav className={styles.header__nav}>
         <Link to="/films">
           <Button
@@ -68,22 +75,26 @@ function HeaderComponent() {
           <Button
             size="nav"
             color="transparent"
-            className={isActive("/threds") ? styles.header__active : ""}
+            className={isActive("/threads") ? styles.header__active : ""}
           >
             Треды
           </Button>
         </Link>
       </nav>
-
       <div className={styles.header__instruments}>
-        <Input
-          placeholder="Введите для поиска..."
-          value={search}
-          onChange={setSearch}
-        />
-        <Icon name="search" />
+        <div className={styles.header__instruments__searchWrapper}>
+          <Input
+            placeholder="Введите для поиска..."
+            value={search}
+            onChange={setSearch}
+          />
+          <Icon
+            name="search"
+            className={styles.searchIcon}
+            onClick={handleSearchClick}
+          />
+        </div>
       </div>
-
       <div className={styles.header__user} ref={dropdownRef}>
         <div
           className={styles.userAvatar}
@@ -93,7 +104,6 @@ function HeaderComponent() {
         >
           <Icon name="user" />
         </div>
-
         {isAuth && isDropdownOpen && (
           <div className={styles.dropdown}>
             <button className={styles.dropdown__item} onClick={handleProfile}>

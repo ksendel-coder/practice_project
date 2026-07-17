@@ -2,7 +2,14 @@ import { memo } from "react";
 import styles from "./Styles.module.scss";
 
 interface IconProps {
-  name: "search" | "user" | "arrowUp" | "edit" | "delete" | "like" | "likeFilled";
+  name:
+    | "search"
+    | "user"
+    | "arrowUp"
+    | "edit"
+    | "delete"
+    | "like"
+    | "likeFilled";
   size?: number;
   color?: string;
   onClick?: () => void;
@@ -80,7 +87,7 @@ const icons = {
       height="20"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="White"
+      stroke="rgba(255,255,255,0.3)"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -103,7 +110,6 @@ const icons = {
       <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z" />
     </svg>
   ),
-
   likeFilled: (
     <svg
       viewBox="0 0 24 24"

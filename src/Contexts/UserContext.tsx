@@ -1,5 +1,5 @@
-import { createContext, useState, ReactNode, useContext } from 'react';
-import { useLocalStorage } from '../Hooks/useLocalStorage';
+import { createContext, useState, ReactNode, useContext } from "react";
+import { useLocalStorage } from "../Hooks/useLocalStorage";
 
 interface UserData {
   _id?: number;
@@ -23,22 +23,25 @@ interface UserContextValue {
 const UserContext = createContext<UserContextValue | undefined>(undefined);
 
 export function UserProvider({ children }: { children: ReactNode }) {
-  const [userData, setUserData] = useLocalStorage<UserData | null>('userData', null);
+  const [userData, setUserData] = useLocalStorage<UserData | null>(
+    "userData",
+    null,
+  );
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAuth, setIsAuthState] = useState(() => {
-    return localStorage.getItem('token') !== null;
+    return localStorage.getItem("token") !== null;
   });
 
   const loadUserData = () => {
-    const saved = localStorage.getItem('userData');
+    const saved = localStorage.getItem("userData");
     if (saved) {
       try {
         const data = JSON.parse(saved);
         setUserData({
           _id: data._id || 1,
-          name: data.name || '',
-          email: data.email || '',
-          bio: data.bio || '',
+          name: data.name || "",
+          email: data.email || "",
+          bio: data.bio || "",
           avatar: data.avatar || null,
         });
       } catch {
@@ -49,46 +52,48 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const setIsAuth = (value: boolean) => {
     if (value) {
-      const token = localStorage.getItem('token');
-      if (!token || token === 'fake-token-123') {
-        const saved = localStorage.getItem('userData');
+      const token = localStorage.getItem("token");
+      if (!token || token === "fake-token-123") {
+        const saved = localStorage.getItem("userData");
         if (saved) {
           try {
             const user = JSON.parse(saved);
             const userId = user._id || 1;
-            localStorage.setItem('token', `mock-token-${userId}`);
+            localStorage.setItem("token", `mock-token-${userId}`);
           } catch {
-            localStorage.setItem('token', 'mock-token-1');
+            localStorage.setItem("token", "mock-token-1");
           }
         } else {
-          localStorage.setItem('token', 'mock-token-1');
+          localStorage.setItem("token", "mock-token-1");
         }
       }
       setIsAuthState(true);
       loadUserData();
     } else {
-      localStorage.removeItem('token');
-      setIsAuthState(false); 
+      localStorage.removeItem("token");
+      setIsAuthState(false);
     }
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
-    setIsAuthState(false);  
+    localStorage.removeItem("token");
+    setIsAuthState(false);
     setIsAdmin(false);
   };
 
   return (
-    <UserContext.Provider value={{ 
-      isAdmin, 
-      isAuth, 
-      userData,
-      setIsAdmin, 
-      setIsAuth, 
-      setUserData,
-      logout,
-      loadUserData
-    }}>
+    <UserContext.Provider
+      value={{
+        isAdmin,
+        isAuth,
+        userData,
+        setIsAdmin,
+        setIsAuth,
+        setUserData,
+        logout,
+        loadUserData,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );
@@ -97,7 +102,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
 export function useUserContext() {
   const context = useContext(UserContext);
   if (!context) {
-    throw new Error('useUserContext must be used within UserProvider');
+    throw new Error("useUserContext must be used within UserProvider");
   }
   return context;
 }

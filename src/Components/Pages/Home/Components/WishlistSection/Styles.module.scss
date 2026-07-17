@@ -21,17 +21,13 @@
 
   &__filmLink {
     font-size: 18px;
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
 
-    a {
-      color: #FFFFFF;
+    &:hover {
+      color: #8b8fec;
       text-decoration: none;
-      font-weight: 600;
-      transition: color 0.3s ease;
-
-      &:hover {
-        color: #8b8fec;
-        text-decoration: none;
-      }
     }
   }
 }

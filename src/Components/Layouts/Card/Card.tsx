@@ -10,6 +10,7 @@ interface CardProps {
   title?: string;
   children?: ReactNode;
   hideButton?: boolean;
+  onView?: () => void;
 }
 
 function CardComponent({
@@ -19,6 +20,7 @@ function CardComponent({
   title,
   children,
   hideButton = false,
+  onView,
 }: CardProps) {
   const buttonSize = size === "long" ? "long" : "main";
   return (
@@ -33,7 +35,7 @@ function CardComponent({
       {title && <h3 className={styles.title}>{title}</h3>}
       {children}
       {!hideButton && (
-        <Button size={buttonSize} color="primary" radius={5}>
+        <Button size={buttonSize} color="primary" radius={5} onClick={onView}>
           Посмотреть
         </Button>
       )}

@@ -1,51 +1,53 @@
-.button_primary {
-  color: #2C2C54;
-  background-color: #686DE0;
-  font-weight: 700;
+.button {
+  &__primary {
+    color: #2c2c54;
+    background-color: #686de0;
+    font-weight: 700;
 
-  &:hover {
-    background-color: #b3b6ef;
-  }
-}
-
-.button_transparent {
-  color: #FFFFFF;
-  background-color: transparent;
-  border: none;
-}
-
-.button_nav {
-  padding: 0;
-  transition: color 0.3s ease;
-
-  &::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background-color: #686DE0;
-    transition: width 0.3s ease;
+    &:hover {
+      background-color: #b3b6ef;
+    }
   }
 
-  &:hover::after {
-    width: 100%;
+  &__transparent {
+    color: #ffffff;
+    background-color: transparent;
+    border: none;
   }
 
-  &:active {
-    color: #2C2C54;
+  &__nav {
+    padding: 0;
+    transition: color 0.3s ease;
+
+    &::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background-color: #686de0;
+      transition: width 0.3s ease;
+    }
+
+    &:hover::after {
+      width: 100%;
+    }
+
+    &:active {
+      color: #2c2c54;
+    }
   }
-}
 
-.button_main {
-  padding: 17px 45px;
-}
+  &__main {
+    padding: 17px 45px;
+  }
 
-.button_long {
-  padding: 17px 180px;
-}
+  &__long {
+    padding: 17px 180px;
+  }
 
-.button_min {
-  padding: 3px;
+  &__min {
+    padding: 3px;
+  }
 }

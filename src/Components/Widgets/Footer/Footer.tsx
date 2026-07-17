@@ -14,9 +14,11 @@ function FooterComponent() {
             Фильмы
           </Button>
         </Link>
-        <Button color="transparent" size="nav">
-          Треды
-        </Button>
+        <Link to={"/threads"}>
+          <Button color="transparent" size="nav">
+            Треды
+          </Button>
+        </Link>
       </nav>
     </footer>
   );

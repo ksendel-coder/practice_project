@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { CreateUser } from "../Components/Pages/CreateUser";
 import { Login } from "../Components/Pages/Login/Login";
 import { UserProvider } from "../Contexts/UserContext";
+import { SearchProvider } from "../Contexts/SearchContext";
 import ProtectedPages from "../Components/ProtectedPages";
 import { Header } from "../Components/Widgets/Header/Header";
 import { Home } from "../Components/Pages/Home/Home";
@@ -14,34 +15,44 @@ import { Threads } from "../Components/Pages/Threads/Threads";
 
 function AppComponent() {
   return (
-    <UserProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<WrappPages />}>
-            <Route index element={<Home />} />
-            <Route
-              path="/films"
-              element={
-                <ProtectedPages>
-                  <Films />
-                </ProtectedPages>
-              }
-            />
-            <Route
-              path="/threads"
-              element={
-                <ProtectedPages>
-                  <Threads />
-                </ProtectedPages>
-              }
-            />
-          </Route>
-          <Route path="/login" element={<Login />} />
-          <Route path="/createUser" element={<CreateUser />} />
-          <Route path='/profile' element={<Profile />} />
-        </Routes>
-      </BrowserRouter>
-    </UserProvider>
+    <SearchProvider>
+      <UserProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<WrappPages />}>
+              <Route index element={<Home />} />
+              <Route
+                path="/films"
+                element={
+                  <ProtectedPages>
+                    <Films />
+                  </ProtectedPages>
+                }
+              />
+              <Route
+                path="/threads"
+                element={
+                  <ProtectedPages>
+                    <Threads />
+                  </ProtectedPages>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedPages>
+                    <Profile />
+                  </ProtectedPages>
+                }
+              />
+            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/createUser" element={<CreateUser />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </BrowserRouter>
+      </UserProvider>
+    </SearchProvider>
   );
 }
 

@@ -1,0 +1,1 @@
+export {WishlistSection} from './WishlistSection';

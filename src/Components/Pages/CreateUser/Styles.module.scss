@@ -3,76 +3,71 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-}
-
-.container_form {
-  width: 420px;
-  padding: 40px 32px;
-  background: #ffffff0d;
-  border-radius: 20px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  transition: all 0.3s ease;
-
-  &:hover {
-    box-shadow: 0 24px 70px rgba(0, 0, 0, 0.4);
-  }
-}
-
-.container_title {
   font-family: inherit;
-  font-size: 28px;
-  font-weight: 700;
-  color: #FFFFFF;
-  text-align: center;
-  margin: 0 0 8px 0;
-  letter-spacing: 0.5px;
 
-  &::after {
-    content: '';
-    display: block;
-    width: 280px;
-    height: 3px;
-    margin: 5px auto 0;
-    background: linear-gradient(90deg, #686DE0, #8B8FEC);
-    border-radius: 2px;
-    transition: none;
-    transform: none;
+  &__form {
+    width: 420px;
+    padding: 40px 32px;
+    background: #ffffff0d;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    transition: all 0.3s ease;
+
+    &_title {
+      font-size: 28px;
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+
+      &::after {
+        content: "";
+        display: block;
+        width: 280px;
+        height: 3px;
+        margin: 5px auto 0;
+        background: linear-gradient(90deg, #686de0, #8b8fec);
+        border-radius: 2px;
+        transition: none;
+        transform: none;
+      }
+    }
   }
-}
 
-.container_buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  margin-top: 8px;
+  &__transition {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
 
-  button {
-    width: 100%;
-    padding: 14px;
-    font-size: 18px;
-    border-radius: 10px;
-  }
-}
+    &_button {
+      width: 100%;
+      padding: 14px;
+      font-size: 18px;
+      border-radius: 10px;
+    }
 
-.container_loginLink {
-  text-align: center;
-  font-size: 14px;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 8px;
+    &_login {
+      text-align: center;
+      font-size: 14px;
+      color: #ffffff80;
+      margin-top: 8px;
 
-  a {
-    color: #686DE0;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s ease;
+      &__link {
+        color: #686de0;
+        text-decoration: none;
+        transition: color 0.3s ease;
 
-    &:hover {
-      color: #8B8FEC;
-      text-decoration: underline;
-      text-underline-offset: 2px;
+        &:hover {
+          color: #8b8fec;
+          text-decoration: underline;
+          text-underline-offset: 2px;
+        }
+      }
     }
   }
 }

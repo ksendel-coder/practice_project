@@ -8,7 +8,7 @@ import { Input } from "../../UI/Input";
 import { Button } from "../../UI/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../Contexts/UserContext";
-import { authAPI } from "../../../Api/server/auth";
+import { authAPI } from "../../../Api/auth";
 
 function CreateUserComponent() {
   const navigate = useNavigate();
@@ -26,24 +26,21 @@ function CreateUserComponent() {
 
   const onSubmit = async (data: InferType<typeof createSchema>) => {
     try {
-      // 🔹 Запрос к API
-      const response = await authAPI.register({
+      const res = await authAPI.register({
         username: data.username,
         email: data.email,
         password: data.password,
       });
+      console.log(res);
 
-      console.log("Ответ сервера:", response);
-
-      // 🔹 Если успешно
-      if (response.ok) {
-        localStorage.setItem("token", response.token);
+      if (res.ok) {
+        localStorage.setItem("token", res.token);
         localStorage.setItem(
           "userData",
           JSON.stringify({
-            _id: response.user._id,
-            name: response.user.username,
-            email: response.user.email || "",
+            _id: res.user._id,
+            name: res.user.username,
+            email: res.user.email || "",
             bio: "",
             avatar: null,
           }),
@@ -51,22 +48,19 @@ function CreateUserComponent() {
         loadUserData();
         setIsAuth(true);
         navigate("/");
-      } else {
-        alert(response.message || "Ошибка регистрации");
       }
     } catch (error) {
-      console.error("Ошибка регистрации:", error);
-      alert("Ошибка сервера");
+      console.error(error);
     }
   };
 
   return (
     <div className={styles.container}>
       <form
-        className={styles.container_form}
+        className={styles.container__form}
         onSubmit={createForm.handleSubmit(onSubmit)}
       >
-        <h2 className={styles.container_title}>Создание аккаунта</h2>
+        <h2 className={styles.container__form_title}>Создание аккаунта</h2>
 
         <Controller
           name="email"
@@ -120,12 +114,12 @@ function CreateUserComponent() {
           )}
         />
 
-        <div className={styles.container_buttons}>
-          <Button type="submit" size="main" color="primary">
+        <div className={styles.container__transition}>
+          <Button type="submit" size="main" color="primary" className={styles.container__transition_button}>
             Создать
           </Button>
-          <div className={styles.container_loginLink}>
-            Уже есть аккаунт? <Link to="/login">Войти</Link>
+          <div className={styles.container__transition_login}>
+            Уже есть аккаунт? <Link to="/login" className={styles.container__transition_login__link}>Войти</Link>
           </div>
         </div>
       </form>

@@ -27,8 +27,8 @@ function ScrollToTopComponent() {
         {visible && (
           <Button onClick={scrollToTop} size="min" color="transparent">
             <div className={styles.icon}>
-              <div className={styles.rippleBg} />
-              <div className={styles.arrowUp}>
+              <div className={styles.icon__rippleBg} />
+              <div className={styles.icon__arrowUp}>
                 <Icon name="arrowUp" />
               </div>
             </div>

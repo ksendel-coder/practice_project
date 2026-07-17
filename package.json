@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "concurrently \"node src/api/server/server.js\" \"vite\"",
+    "dev": "concurrently \"node server/server.js\" \"vite\"",
     "server": "node server.js",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
+    "axios": "^1.18.1",
     "classnames": "^2.5.1",
     "cors": "^2.8.6",
     "express": "^5.2.1",

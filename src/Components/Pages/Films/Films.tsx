@@ -6,38 +6,60 @@ import { Checkbox } from "../../UI/Checkbox";
 import { Pagination } from "../../UI/Pagination";
 import { ScrollToTop } from "../../UI/ScrollToTop";
 import { genres } from "../../../data/film";
-import { filmsAPI } from "../../../Api/server/films";
+import { filmsAPI } from "../../../Api/films";
+import { useSearch } from "../../../Contexts/SearchContext";
+import { VideoModal } from "../../UI/VideoModal/VideoModal";
 
-interface Film {
+export interface Film {
   _id: number;
   title: string;
   genre: string[];
   image: string;
+  videoUrl?: string;
 }
 
 const count_items = 9;
 
 function FilmsComponent() {
+  const { searchQuery, setSearchQuery } = useSearch();
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [films, setFilms] = useState<Film[]>([]);
-
+  const [selectedMovie, setSelectedMovie] = useState<Film | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [filters, setFilters] = useState<Record<string, boolean>>(
-    Object.fromEntries(genres.map((g) => [g, false]))
+    Object.fromEntries(genres.map((g) => [g, false])),
   );
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         const data = await filmsAPI.getAll();
-        console.log('✅ Загружено фильмов:', data.length);
+        console.log("Загружено фильмов:", data.length);
         setFilms(data);
       } catch (error) {
-        console.error('❌ Ошибка загрузки фильмов:', error);
-      } 
+        console.error(error);
+      }
     };
     fetchMovies();
   }, []);
+
+  useEffect(() => {
+    if (searchQuery) {
+      setSearch(searchQuery);
+      setSearchQuery("");
+    }
+  }, [searchQuery, setSearchQuery]);
+
+  const handleViewMovie = (movie: Film) => {
+    setSelectedMovie(movie);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedMovie(null);
+  };
 
   const toggleFilter = (genre: string) => {
     setFilters((prev) => ({ ...prev, [genre]: !prev[genre] }));
@@ -49,7 +71,6 @@ function FilmsComponent() {
 
     return films.filter((film) => {
       const matchesSearch = film.title.toLowerCase().includes(searchLower);
-      
       const matchesGenre =
         activeGenres.length === 0 ||
         film.genre.some((g) => activeGenres.includes(g));
@@ -62,7 +83,7 @@ function FilmsComponent() {
   const startIndex = (currentPage - 1) * count_items;
   const paginatedMovies = filteredMovies.slice(
     startIndex,
-    startIndex + count_items
+    startIndex + count_items,
   );
 
   const handleSearch = (value: string) => {
@@ -78,13 +99,11 @@ function FilmsComponent() {
   return (
     <section className={styles.films}>
       <h1 className={styles.films__title}>Фильмы</h1>
-
       <Input
         placeholder="Поиск по названию..."
         value={search}
         onChange={handleSearch}
       />
-
       <div className={styles.films__filters}>
         {genres.map((genre) => (
           <Checkbox
@@ -95,20 +114,23 @@ function FilmsComponent() {
           />
         ))}
       </div>
-
       {paginatedMovies.length === 0 ? (
         <div className={styles.films__empty}>
           <p>Ничего не найдено</p>
-          <span>Попробуйте изменить параметры поиска</span>
+          <span className={styles.films__empty_line}>Попробуйте изменить параметры поиска</span>
         </div>
       ) : (
         <>
           <div className={styles.films__wishlist}>
             {paginatedMovies.map((movie) => (
-              <Card key={movie._id} title={movie.title} image={movie.image} />
+              <Card
+                key={movie._id}
+                title={movie.title}
+                image={movie.image}
+                onView={() => handleViewMovie(movie)}
+              />
             ))}
           </div>
-
           {totalPages > 1 && (
             <Pagination
               currentPage={currentPage}
@@ -118,7 +140,12 @@ function FilmsComponent() {
           )}
         </>
       )}
-
+      <VideoModal
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        videoSrc={selectedMovie?.videoUrl || ""}
+        title={selectedMovie?.title}
+      />
       <ScrollToTop />
     </section>
   );
