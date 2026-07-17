@@ -17,7 +17,7 @@ function AppComponent() {
   return (
     <SearchProvider>
       <UserProvider>
-        <BrowserRouter basename="multiCinema-production" >
+        <BrowserRouter basename="/multiCinema-production" >
           <Routes>
             <Route path="/" element={<WrappPages />}>
               <Route index element={<Home />} />
