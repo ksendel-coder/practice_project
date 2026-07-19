@@ -9,7 +9,7 @@
 html, body {
   width: 100%;
   min-height: 100%;
-  background: linear-gradient(to bottom right, #5f50a3, #2C2C54);
+  background: linear-gradient(to bottom right, #5f50a3, var(--dark-color));
   font-family: 'Nunito', sans-serif;
   font-size: 21px;
   font-weight: 500;
@@ -35,14 +35,14 @@ button {
   width: fit-content;
   height: fit-content;
   position: relative;
-  transition: all 0.3s ease;
+  transition: var(--transition-all);
 
   &:focus {
     outline: none;
   }
   
   &:focus-visible {
-  outline: 1px solid #FFFFFF;
+  outline: 1px solid var(--primary-color);
   outline-offset: 2px;
   }
 
@@ -62,10 +62,10 @@ button {
 }
 
 .card-image {
-  width: 100%;
+  width: var(--main-width);
   height: auto;
   object-fit: cover;
-  border-radius: 12px;
+  border-radius: var(--radius-middle);
   display: block;
   flex-shrink: 0;
 }

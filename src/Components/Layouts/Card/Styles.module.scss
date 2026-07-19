@@ -4,42 +4,41 @@
   align-items: center;
   overflow: hidden;
   box-sizing: border-box;
-  border-radius: 20px;
-  background-color: #2C2C54;
+  border-radius: var(--radius-max);
+  background-color: var(--dark-color);
   box-shadow: 0px 30px 30px 0px rgba(146, 146, 146, 0.2);
   padding: 20px 25px;
-  gap: 20px;
-}
+  gap: var(--gap);
 
+  &__main {
+    width: 340px;
 
-.card > :last-child {
-  margin-top: 0;
-  margin-bottom: 0;
-}
-
-.card_main {
-  width: 340px;
-
-  .image {
-    width: 282px;
-    height: 405px;
+    &__image {
+      width: 282px;
+      height: 405px;
+    }
   }
-}
 
-.card_long {
-  width: 735px;
+  &__long {
+    width: 735px;
 
-  .image {
-    width: 677px;
-    height: 375px;
+    &__image {
+      width: 677px;
+      height: 375px;
+    }
   }
-}
 
-.title {
-  font-family: 'Nunito', sans-serif;
-  font-size: 18px;
-  font-weight: 700;
-  color: #FFFFFF;
-  text-align: center;
-  margin: 8px 0 4px;
+  &__title {
+    font-family: inherit;
+    font-size: var(--font-size-lg);
+    font-weight: var(--bold);
+    color: var(--primary-color);
+    text-align: center;
+    margin: 8px 0 4px;
+  }
+
+  &__button {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }

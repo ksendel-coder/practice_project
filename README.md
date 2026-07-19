@@ -1,75 +1,60 @@
-# React + TypeScript + Vite
+# Сайт: https://ksendel-coder.github.io/multiCinema-production/
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Учебный проект - SPA для поиска фильмов с авторизацией, тредами и видеоплеером. Включает фронтенд на React + TypeScript и бэкенд на Express.
 
-Currently, two official plugins are available:
+# Основной функционал:
+1. Регистрация и вход (Bearer-токен)
+2. Фильмы: поиск, фильтрация по жанрам, пагинация, видео в модалке
+3. Треды: создание постов, лайки
+4. Профиль (имя, био, аватар): редактирование, смена пароля
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+# Сервер (server.js)
 
-## Expanding the ESLint configuration
+Серверная часть написана на Express и находится в файле `server.js`
+В нём реализовано:
+1. Хранение данных в JSON-файле (`db.json`)
+2. Маршруты для регистрации, входа, профиля, фильмов, тредов
+3. Логика лайков
+4. Bearer-токены для авторизации
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+# Функции сервера
+`server.js` - главный файл сервера. Настраивает CORS, парсинг JSON, подключает базу и обрабатывает все API-маршруты 
+`db.json` - база данных в формате JSON. Хранит пользователей, фильмы, треды, лайки
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+# Основные маршруты
+POST: `/api/auth/register` регистрация
+POST: `/api/auth/login` вход
+PUT: `/api/users/profile` обновление профиля
+PUT: `/api/users/password` смена пароля
+GET: `/api/films` список фильмов
+GET: `/api/threads` список тредов
+POST: `/api/threads` создать тред
+DELETE: `/api/threads/:id` удалить тред
+POST: `/api/threads/:id/like` лайк/разлайк
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+# Запуск проекта
+1. Склонировать проект git clone https://github.com/ksendel-coder/practice_project
+cd practice_project
+2. Установить зависимости npm install --legacy-peer-deps
+3. Собрать npm run build
+4. Запустить npm run dev
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Фронтенд и сервер запускаются одной командой: npm run dev 
+# Фронтенд: http://localhost:5173
+# Сервер: http://localhost:3000 
 
-```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+# Чтобы задеплоить использовала Render
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Были созданы файлы .env для хранения переменных окружения — значений, которые зависят от среды запуска (разработка, продакшен). В проекте используется два файла: `.env.development` для локальной разработки (npm run dev) и `.env.production` для продакшена (npm run build), в котором указывается реальный URL сервера на Render. По умолчанию стоит `/api`.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
 
-```
+Если что-то не так будет, то создайте файлы `.env.development` и `.env.production` в корне проекта:
+# .env.development
+VITE_API_URL=/api
+
+# .env.production 
+VITE_API_URL=https://practice-project-server.onrender.com/api
+

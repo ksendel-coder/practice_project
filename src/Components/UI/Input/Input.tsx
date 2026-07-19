@@ -14,16 +14,7 @@ interface InputProps {
   name?: string;
 }
 
-function InputComponent({
-  placeholder,
-  value,
-  onChange,
-  label,
-  error,
-  type = 'text',
-  disabled,
-  className,
-}: InputProps) {
+function InputComponent({ placeholder, value, onChange, label, error, type = 'text', disabled, className, }: InputProps) {
   return (
     <div className={cn(styles.wrapper, className)}>
       {label && <label className={styles.wrapper__label}>{label}</label>}
@@ -37,7 +28,6 @@ function InputComponent({
         onChange={(e) => onChange(e.target.value)}
         disabled={disabled}
       />
-      {}
       {error && <p className={styles.wrapper__error}>{error}</p>}
     </div>
   );

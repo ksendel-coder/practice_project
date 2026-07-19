@@ -124,12 +124,7 @@ const icons = {
   ),
 };
 
-function IconComponent({
-  name,
-  size,
-  color = "currentColor",
-  onClick,
-}: IconProps) {
+function IconComponent({ name, size, color = "currentColor", onClick, }: IconProps) {
   return (
     <div
       className={styles.icon}

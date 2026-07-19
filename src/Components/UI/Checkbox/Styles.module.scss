@@ -11,15 +11,15 @@
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 2px solid #ffffff4d;
+  border: 2px solid var(--placehold-color);
   background-color: transparent;
-  transition: all 0.3s ease;
+  transition: var(--transition-all);
   flex-shrink: 0;
   position: relative;
 }
 
 .checkbox_active {
-  background-color: #686DE0;
+  background-color: var(--secondary-color);
 
   &::after {
     content: '✓';
@@ -27,16 +27,16 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #FFFFFF;
-    font-size: 15px;
+    color: var(--primary-color);
+    font-size: var(--font-size-line);
   }
 }
 
 .container_label {
   color: #ffffff99;
-  transition: color 0.3s ease;
+  transition: var(--transition);
 }
 
 .container_label_active {
-  color: #FFFFFF;
+  color: var(--primary-color);
 }

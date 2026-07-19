@@ -39,8 +39,6 @@ function LoginComponent() {
         username: data.username,
         password: data.password,
       });
-      console.log(res);
-
       if (res.ok) {
         localStorage.setItem("token", res.token);
         if (data.remember) {

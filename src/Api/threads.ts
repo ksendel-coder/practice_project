@@ -14,10 +14,6 @@ export const threadsAPI = {
     return (await api.post(`/threads/${postId}/like`)).data;
   },
 
-  comment: async (postId: number, text: string) => {
-    return (await api.post(`/threads/${postId}/comments`, { text })).data;
-  },
-
   delete: async (postId: number) => {
     return (await api.delete(`/threads/${postId}`)).data;
   },

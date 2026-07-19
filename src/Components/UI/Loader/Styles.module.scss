@@ -2,13 +2,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 20px;
+  padding: var(--padding-lg) var(--padding);
   min-height: 50vh;
 
   &__loader {
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-top-color: #686de0;
-    border-radius: 50%;
+    border: var(--border);
+    border-top-color: var(--secondary-color);
+    border-radius: var(--radius-50);
     animation: spin 0.8s linear infinite;
   }
 }

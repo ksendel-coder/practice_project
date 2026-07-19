@@ -4,13 +4,13 @@
   width: 60vw;
   line-height: 125%;
   gap: 30px;
-  height: 100vh;
+  height: var(--min-height);
   justify-content: center;
 
   &__title {
     font-size: 70px;
-    line-height: 100%;
+    line-height: var(--main-height);
     margin-bottom: 15px;
-    font-weight: 700;
+    font-weight: var(--bold);
   }
 }

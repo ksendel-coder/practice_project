@@ -6,7 +6,7 @@ interface LoaderProps {
   color?: string;
 }
 
-function LoaderComponent({ size = 40, color = '#686DE0' }: LoaderProps) {
+function LoaderComponent({ size = 40, color = 'var(--secondary-color)' }: LoaderProps) {
   return (
     <div className={styles.loaderWrapper}>
       <div 

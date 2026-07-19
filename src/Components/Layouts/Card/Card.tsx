@@ -24,18 +24,18 @@ function CardComponent({
 }: CardProps) {
   const buttonSize = size === "long" ? "long" : "main";
   return (
-    <div className={cn(styles.card, styles[`card_${size}`], className)}>
+    <div className={cn(styles.card, styles[`card__${size}`], className)}>
       {image && (
         <img
           src={image}
           alt={`Постер фильма ${title}`}
-          className={cn("card-image", styles.image)}
+          className={cn("card-image", styles[`card__${size}__image`])}
         />
       )}
-      {title && <h3 className={styles.title}>{title}</h3>}
+      {title && <h3 className={styles.card__title}>{title}</h3>}
       {children}
       {!hideButton && (
-        <Button size={buttonSize} color="primary" radius={5} onClick={onView}>
+        <Button size={buttonSize} color="primary" radius={5} onClick={onView} className={styles.card__button}>
           Посмотреть
         </Button>
       )}

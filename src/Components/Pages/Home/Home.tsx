@@ -1,37 +1,37 @@
 import { memo, useState } from "react";
 import styles from "./Styles.module.scss";
 import { ScrollToTop } from "../../UI/ScrollToTop";
-import { VideoModal } from "../../UI/VideoModal/VideoModal";
+import { VideoModal } from "../../Layouts/VideoModal";
 import { InfoSection } from "./Components/InfoSection/InfoSection";
 import { PopularSection } from "./Components/PopularSection/PopularSection";
 import { WishlistSection } from "./Components/WishlistSection/WishlistSection";
 import { Film } from "../Films/Films";
 
 function HomeComponent() {
-  const [selectedMovie, setSelectedMovie] = useState<Film | null>(null);
+  const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleViewMovie = (movie: Film) => {
-    setSelectedMovie(movie);
+  const handleViewFilm = (film: Film) => {
+    setSelectedFilm(film);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedMovie(null);
+    setSelectedFilm(null);
   };
 
   return (
     <section className={styles.main}>
       <InfoSection />
-      <PopularSection onView={handleViewMovie} />
-      <WishlistSection onView={handleViewMovie} />
+      <PopularSection onView={handleViewFilm} />
+      <WishlistSection onView={handleViewFilm} />
       <ScrollToTop />
       <VideoModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        videoSrc={selectedMovie?.videoUrl || ""}
-        title={selectedMovie?.title}
+        videoSrc={selectedFilm?.videoUrl || ""}
+        title={selectedFilm?.title}
       />
     </section>
   );

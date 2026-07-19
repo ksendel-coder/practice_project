@@ -3,19 +3,19 @@
   display: flex;
   flex-direction: column;
   font-family: inherit;
-  color: #ffffff;
+  color: var(--primary-color);
 
   &__title {
-    font-weight: 700;
-    font-size: 35px;
+    font-weight: var(--bold);
+    font-size: var(--font-size-title);
     margin: 34px 0;
   }
 
   &__filters {
     display: flex;
-    gap: 12px;
-    padding: 10px;
-    border-radius: 12px;
+    gap: var(--gap-transition);
+    padding: var(--padding-md);
+    border-radius: var(--radius-middle);
     max-width: fit-content;
     margin: 20px auto;
   }
@@ -23,17 +23,17 @@
   &__wishlist {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 25px;
+    gap: var(--gap-nav);
     margin-bottom: 20px;
   }
 
   &__empty {
     grid-column: 1 / -1;
     text-align: center;
-    padding: 60px 20px;
+    padding: var(--padding-empty);
 
     &_line {
-      font-size: 15px;
+      font-size: var(--font-size-line);
     }
   }
 }

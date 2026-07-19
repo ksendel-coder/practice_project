@@ -1,1 +1,0 @@
-export {VideoModal} from './VideoModal';

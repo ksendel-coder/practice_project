@@ -8,11 +8,7 @@ interface PaginationProps {
   onChange: (page: number) => void;
 }
 
-function PaginationComponent({
-  currentPage,
-  totalPage,
-  onChange,
-}: PaginationProps) {
+function PaginationComponent({ currentPage, totalPage, onChange, }: PaginationProps) {
   const getNumberPage = () => {
     const pages: number[] = [];
     for (let i = 1; i <= totalPage; i++) {
@@ -28,13 +24,11 @@ function PaginationComponent({
   return (
     <nav className={styles.pagination}>
       {getNumberPage().map((page) => {
-        const isActive = currentPage === page;
-
         return (
           <Button
             key={page}
             size="min"
-            color={isActive ? "primary" : "transparent"}
+            color={currentPage === page ? "primary" : "transparent"}
             onClick={() => onChange(page)}
             radius={5}
           >

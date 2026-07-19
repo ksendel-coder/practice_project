@@ -21,14 +21,6 @@ export interface Post {
   isLiked?: boolean;
 }
 
-// export interface Comment {
-//   _id: number;
-//   author: string;
-//   text: string;
-//   createdAt: string;
-//   likes: number;
-// }
-
 function ThreadsComponent() {
   const { userData } = useUserContext();
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -36,10 +28,10 @@ function ThreadsComponent() {
   const [newContent, setNewContent] = useState("");
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const loadPosts = async () => {
-      console.log("Загрузка постов...");
       try {
         const data = await threadsAPI.getAll();
         const saved = localStorage.getItem("userData");
@@ -93,6 +85,7 @@ function ThreadsComponent() {
 
   const handleCreatePost = async () => {
     if (!newTitle.trim() || !newContent.trim()) return;
+    setIsLoading(true); 
     try {
       const res = await threadsAPI.create({
         title: newTitle,
@@ -110,6 +103,8 @@ function ThreadsComponent() {
       }
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -122,11 +117,7 @@ function ThreadsComponent() {
     }
   };
 
-  if (loading) {
-    return (
-        <Loader />
-    );
-  }
+  if (loading) return <Loader />
 
   return (
     <div className={styles.threads}>
@@ -160,7 +151,7 @@ function ThreadsComponent() {
             onClick={handleCreatePost}
             disabled={!newTitle.trim() || !newContent.trim()}
           >
-            Опубликовать
+            {isLoading ? "Публикация..." : "Опубликовать"}
           </Button>
         </div>
       )}

@@ -52,21 +52,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
 
   const setIsAuth = (value: boolean) => {
     if (value) {
-      const token = localStorage.getItem("token");
-      if (!token || token === "fake-token-123") {
-        const saved = localStorage.getItem("userData");
-        if (saved) {
-          try {
-            const user = JSON.parse(saved);
-            const userId = user._id || 1;
-            localStorage.setItem("token", `mock-token-${userId}`);
-          } catch {
-            localStorage.setItem("token", "mock-token-1");
-          }
-        } else {
-          localStorage.setItem("token", "mock-token-1");
-        }
+      const saved = localStorage.getItem("userData");
+      let token = "mock-token-1";
+
+      if (saved) {
+        try {
+          const user = JSON.parse(saved);
+          token = `mock-token-${user._id || 1}`;
+        } catch {}
       }
+      localStorage.setItem("token", token);
       setIsAuthState(true);
       loadUserData();
     } else {

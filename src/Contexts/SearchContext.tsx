@@ -15,8 +15,6 @@ export function SearchProvider({ children }: { children: ReactNode }) {
   const [searchQuery, setSearchQuery] = useState("");
   const performSearch = (query: string) => {
     setSearchQuery(query);
-    if (query.trim()) {
-    }
   };
 
   return (

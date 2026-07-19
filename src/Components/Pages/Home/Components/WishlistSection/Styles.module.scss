@@ -1,5 +1,5 @@
 .container {
-  height: 100vh;
+  height: var(--min-height);
 
   &__films {
     display: flex;
@@ -7,26 +7,26 @@
   }
 
   &__title {
-    font-size: 35px;
-    font-weight: 700;
+    font-size: var(--font-size-title);
+    font-weight: var(--bold);
     margin-bottom: 50px;
   }
 
   &__wishlist {
     display: flex;
-    gap: 20px;
+    gap: var(--gap);
     justify-content: center;
     align-items: center;
   }
 
   &__filmLink {
-    font-size: 18px;
-    color: #ffffff;
+    font-size: var(--font-size-lg);
+    color: var(--primary-color);
     text-decoration: none;
-    transition: color 0.3s ease;
+    transition: var(--transition);
 
     &:hover {
-      color: #8b8fec;
+      color: var(--primary-color-hover);
       text-decoration: none;
     }
   }

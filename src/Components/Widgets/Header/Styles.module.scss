@@ -4,17 +4,17 @@
   justify-content: space-between;
   font-family: inherit;
   font-size: inherit;
-  padding: 10px 20px;
+  padding: var(--padding-md) 20px;
   align-items: center;
 
   &__nav {
     display: flex;
-    gap: 25px;
+    gap: var(--gap-nav);
   }
 
   &__instruments {
     display: flex;
-    gap: 20px;
+    gap: var(--gap);
 
     &__searchWrapper {
       display: flex;
@@ -31,7 +31,7 @@
   }
 
   &__active {
-    color: #2c2c54;
+    color: var(--dark-color);
   }
 
   &__user {
@@ -46,7 +46,7 @@
   left: 50px;
   min-width: 180px;
   background: #2a2a53;
-  border-radius: 12px;
+  border-radius: var(--radius-middle);
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
   padding: 8px;
   z-index: 1;
@@ -55,20 +55,19 @@
   &__item {
     display: flex;
     align-items: center;
-    gap: 12px;
-    width: 100%;
-    padding: 10px 14px;
+    gap: var(--gap-transition);
+    width: var(--main-width);
+    padding: var(--padding-md) 14px;
     background: transparent;
     border: none;
     border-radius: 8px;
-    color: #ffffff;
-    font-size: 14px;
+    color: var(--primary-color);
+    font-size: var(--font-size-md);
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: var(--transition-all);
 
     &:hover {
       background: rgba(255, 255, 255, 0.06);
-      color: #ffffff;
     }
   }
 
@@ -77,7 +76,6 @@
 
     &:hover {
       background: rgba(255, 77, 79, 0.1);
-      color: #ff7875;
     }
   }
 }

@@ -50,9 +50,7 @@ function ProfileComponent() {
     setIsLoading(true);
     try {
       if (data.newPassword) {
-        console.log("Смена пароля на:", data.newPassword);
         await authAPI.changePassword(data.newPassword);
-        console.log("Пароль обновлён на сервере");
       }
 
       const res = await authAPI.updateProfile({
@@ -61,7 +59,6 @@ function ProfileComponent() {
         bio: data.bio || "",
         avatar: avatar || undefined,
       });
-      console.log(res);
 
       if (res.ok) {
         const savedUser = localStorage.getItem("userData");
@@ -276,7 +273,7 @@ function ProfileComponent() {
             radius={12}
             disabled={!isEditing}
           >
-            {isLoading ? "Сохраняем..." : "Сохранить"}
+            {isLoading ? "Сохранение..." : "Сохранить"}
           </Button>
         </div>
       </form>

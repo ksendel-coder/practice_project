@@ -2,28 +2,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
+  min-height: var(--min-height);
   font-family: inherit;
 
   &__form {
     width: 450px;
-    padding: 40px 32px;
-    background: #ffffff0d;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: var(--padding-form);
+    background: var(--form-color);
+    border-radius: var(--radius-max);
+    box-shadow: var(--shadow);
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    transition: all 0.3s ease;
+    gap: var(--gap);
+    transition: var(--transition-all);
   }
 
   &__title {
-    font-size: 28px;
-    font-weight: 700;
-    color: #ffffff;
+    font-size: var(--font-size-form);
+    font-weight: var(--bold);
+    color: var(--primary-color);
     text-align: center;
-    margin: 0 0 8px 0;
-    letter-spacing: 0.5px;
+    margin-bottom: var(--margin-form);
+    letter-spacing: var(--spacing);
 
     &::after {
       content: "";
@@ -31,7 +31,7 @@
       width: 80px;
       height: 3px;
       margin: 5px auto 0;
-      background: linear-gradient(90deg, #686de0, #8b8fec);
+      background: linear-gradient(90deg, var(--secondary-color), var(--primary-color-hover));
       border-radius: 2px;
       transition: none;
       transform: none;
@@ -41,29 +41,29 @@
   &__transition {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-top: 8px;
+    gap: var(--gap-transition);
+    margin-top: var(--margin-form);
 
     &_button {
-      width: 100%;
+      width: var(--main-width);
       padding: 14px;
-      font-size: 18px;
-      border-radius: 10px;
+      font-size: var(--font-size-lg);
+      border-radius: var(--radius-main);
     }
 
     &_reg {
       text-align: center;
-      font-size: 14px;
+      font-size: var(--font-size-md);
       color: #ffffff80;
-      margin-top: 8px;
+      margin-top: var(--margin-form);
 
       &__link {
-        color: #686de0;
+        color: var(--secondary-color);
         text-decoration: none;
-        transition: color 0.3s ease;
+        transition: var(--transition);
 
         &:hover {
-          color: #8b8fec;
+          color: var(--primary-color-hover);
           text-decoration: underline;
           text-underline-offset: 2px;
         }

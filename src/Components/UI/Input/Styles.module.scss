@@ -5,41 +5,41 @@
 
   &__label {
     font-weight: 600;
-    transition: color 0.3s ease;
+    transition: var(--transition);
   }
 
   &__input {
-    padding: 12px 16px;
-    background: #ffffff0d;
-    border: 2px solid #ffffff1a;
-    border-radius: 10px;
-    color: #ffffff;
-    font-size: 16px;
+    padding: var(--padding-text);
+    background: var(--form-color);
+    border: 2px solid rgba(255, 255, 255, 0.102);
+    border-radius: var(--radius-main);
+    color: var(--primary-color);
+    font-size: var(--font-size-content);
     font-family: inherit;
     outline: none;
-    transition: all 0.3s ease;
-    width: 100%;
+    transition: var(--transition-all);
+    width: var(--main-width);
 
     &::placeholder {
-      color: #ffffff4d;
+      color: var(--placehold-color);
       font-weight: 400;
     }
 
     &:hover:not(:disabled) {
-      border-color: #ffffff33;
-      background: #ffffff14;
+      border-color: rgba(255, 255, 255, 0.2);
+      background: var(--background-hover);
     }
 
     &:focus:not(:disabled) {
-      border-color: #686de0;
-      background: #ffffff14;
-      box-shadow: 0 0 0 4px #686de026;
+      border-color: var(--secondary-color);
+      background: var(--background-hover);
+      box-shadow: 0 0 0 4px rgba(104, 109, 224, 0.149);
     }
 
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
-      background: #ffffff05;
+      background: rgba(255, 255, 255, 0.02);
     }
 
     &.error {

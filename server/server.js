@@ -102,11 +102,6 @@ app.post("/api/auth/login", (req, res) => {
   });
 });
 
-// Список пользователей
-app.get("/api/users", (req, res) => {
-  res.json(readDB().users);
-});
-
 // Обновление пароля
 app.put("/api/users/password", (req, res) => {
   console.log("Смена пароля");

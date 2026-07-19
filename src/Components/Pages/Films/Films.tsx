@@ -1,15 +1,27 @@
 import styles from "./Styles.module.scss";
 import { Input } from "../../UI/Input";
 import { Card } from "../../Layouts/Card";
-import { memo, useState, useMemo, useEffect } from "react";
+import { memo, useState, useEffect } from "react";
 import { Checkbox } from "../../UI/Checkbox";
 import { Pagination } from "../../UI/Pagination";
 import { ScrollToTop } from "../../UI/ScrollToTop";
-import { genres } from "../../../data/film";
 import { filmsAPI } from "../../../Api/films";
 import { useSearch } from "../../../Contexts/SearchContext";
-import { VideoModal } from "../../UI/VideoModal/VideoModal";
+import { VideoModal } from "../../Layouts/VideoModal";
 import { Loader } from "../../UI/Loader";
+import { useFilmFilters } from "../../../Hooks/useFilmFilters";
+import { usePagination } from "../../../Hooks/usePagination";
+
+export const genres = [
+  "Фантастика",
+  "Фэнтези",
+  "Драма",
+  "Мелодрама",
+  "Комедия",
+  "Боевик",
+  "Ужасы",
+  "Детектив",
+];
 
 export interface Film {
   _id: number;
@@ -19,26 +31,18 @@ export interface Film {
   videoUrl?: string;
 }
 
-const count_items = 9;
-
 function FilmsComponent() {
   const { searchQuery, setSearchQuery } = useSearch();
-  const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [films, setFilms] = useState<Film[]>([]);
-  const [selectedMovie, setSelectedMovie] = useState<Film | null>(null);
+  const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filters, setFilters] = useState<Record<string, boolean>>(
-    Object.fromEntries(genres.map((g) => [g, false])),
-  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchFilms = async () => {
       setLoading(true);
       try {
         const data = await filmsAPI.getAll();
-        console.log("Загружено фильмов:", data.length);
         setFilms(data);
       } catch (error) {
         console.error(error);
@@ -46,7 +50,7 @@ function FilmsComponent() {
         setLoading(false);
       }
     };
-    fetchMovies();
+    fetchFilms();
   }, []);
 
   useEffect(() => {
@@ -54,42 +58,23 @@ function FilmsComponent() {
       setSearch(searchQuery);
       setSearchQuery("");
     }
-  }, [searchQuery, setSearchQuery]);
+  }, [searchQuery]);
 
-  const handleViewMovie = (movie: Film) => {
-    setSelectedMovie(movie);
+  const { search, setSearch, filters, toggleFilter, filteredFilms } =
+    useFilmFilters(films);
+
+  const { currentPage, setCurrentPage, totalPages, paginatedItems } =
+    usePagination(filteredFilms, 9);
+
+  const handleViewFilm = (film: Film) => {
+    setSelectedFilm(film);
     setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    setSelectedMovie(null);
+    setSelectedFilm(null);
   };
-
-  const toggleFilter = (genre: string) => {
-    setFilters((prev) => ({ ...prev, [genre]: !prev[genre] }));
-  };
-
-  const filteredMovies = useMemo(() => {
-    const searchLower = search.toLowerCase().trim();
-    const activeGenres = Object.keys(filters).filter((g) => filters[g]);
-
-    return films.filter((film) => {
-      const matchesSearch = film.title.toLowerCase().includes(searchLower);
-      const matchesGenre =
-        activeGenres.length === 0 ||
-        film.genre.some((g) => activeGenres.includes(g));
-
-      return matchesSearch && matchesGenre;
-    });
-  }, [search, filters, films]);
-
-  const totalPages = Math.ceil(filteredMovies.length / count_items);
-  const startIndex = (currentPage - 1) * count_items;
-  const paginatedMovies = filteredMovies.slice(
-    startIndex,
-    startIndex + count_items,
-  );
 
   const handleSearch = (value: string) => {
     setSearch(value);
@@ -101,11 +86,7 @@ function FilmsComponent() {
     setCurrentPage(1);
   };
 
-  if (loading) {
-  return (
-      <Loader />
-  );
-}
+  if (loading) return <Loader />;
 
   return (
     <section className={styles.films}>
@@ -125,20 +106,22 @@ function FilmsComponent() {
           />
         ))}
       </div>
-      {paginatedMovies.length === 0 ? (
+      {paginatedItems.length === 0 ? (
         <div className={styles.films__empty}>
           <p>Ничего не найдено</p>
-          <span className={styles.films__empty_line}>Попробуйте изменить параметры поиска</span>
+          <span className={styles.films__empty_line}>
+            Попробуйте изменить параметры поиска
+          </span>
         </div>
       ) : (
         <>
           <div className={styles.films__wishlist}>
-            {paginatedMovies.map((movie) => (
+            {paginatedItems.map((film) => (
               <Card
-                key={movie._id}
-                title={movie.title}
-                image={movie.image}
-                onView={() => handleViewMovie(movie)}
+                key={film._id}
+                title={film.title}
+                image={film.image}
+                onView={() => handleViewFilm(film)}
               />
             ))}
           </div>
@@ -154,8 +137,8 @@ function FilmsComponent() {
       <VideoModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
-        videoSrc={selectedMovie?.videoUrl || ""}
-        title={selectedMovie?.title}
+        videoSrc={selectedFilm?.videoUrl || ""}
+        title={selectedFilm?.title}
       />
       <ScrollToTop />
     </section>

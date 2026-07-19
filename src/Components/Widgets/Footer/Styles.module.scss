@@ -4,12 +4,12 @@
   justify-content: space-between;
   font-family: inherit;
   font-size: inherit;
-  padding: 40px 0 20px;
+  padding: var(--padding-lg) 0 var(--padding);
   align-items: center;
 
   &__nav {
     display: flex;
-    gap: 25px;
+    gap: var(--gap-nav);
   }
 
   &__logo {

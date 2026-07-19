@@ -28,12 +28,7 @@ function ButtonComponent({
       style={{ borderRadius: radius ? `${radius}px` : "" }}
       onClick={onClick}
       type={type}
-      className={cn(
-        styles.button,
-        styles[`button__${color}`],
-        styles[`button__${size}`],
-        className,
-      )}
+      className={cn(styles.button, styles[`button__${color}`], styles[`button__${size}`], className,)}
       disabled={disabled}
     >
       {children}

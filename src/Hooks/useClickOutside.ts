@@ -9,7 +9,7 @@ const useOutsideClick = (
   options = ["button", "a[href]"],
   isActive?: boolean | undefined,
 ) => {
-  const isFirstClick = useRef(true);
+  const isFirstClick = useRef(true); 
 
   useEffect(() => {
     if (!target || !handler) return;
@@ -37,7 +37,7 @@ const useOutsideClick = (
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
-      isFirstClick.current = true;
+      isFirstClick.current = true;  
     };
   }, [target, handler, options, isActive]);
 };

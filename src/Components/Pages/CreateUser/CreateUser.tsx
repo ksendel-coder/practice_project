@@ -31,8 +31,6 @@ function CreateUserComponent() {
         email: data.email,
         password: data.password,
       });
-      console.log(res);
-
       if (res.ok) {
         localStorage.setItem("token", res.token);
         localStorage.setItem(
