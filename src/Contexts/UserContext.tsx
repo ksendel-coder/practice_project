@@ -89,7 +89,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         loadUserData,
       }}
     >
-      {children}
+      {children} 
     </UserContext.Provider>
   );
 }
