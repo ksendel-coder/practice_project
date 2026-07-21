@@ -13,7 +13,7 @@ import { Films } from "../Components/Pages/Films/Films";
 import { Profile } from "../Components/Pages/Profile/Profile";
 import { Threads } from "../Components/Pages/Threads/Threads";
 
-const basename = import.meta.env.PROD ? '/MultiCinema' : '';
+const basename = import.meta.env.PROD ? '/MultiCinema' : ''; 
 function AppComponent() {
   return (
     <SearchProvider>
