@@ -1,4 +1,4 @@
-# Сайт: https://ksendel-coder.github.io/multiCinema-production/
+# Сайт: https://ksendel-coder.github.io/MultiCinema/
 
 # Учебный проект - SPA для поиска фильмов с авторизацией, тредами и видеоплеером. Включает фронтенд на React + TypeScript и бэкенд на Express.
 
