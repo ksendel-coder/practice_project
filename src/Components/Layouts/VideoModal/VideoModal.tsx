@@ -8,12 +8,7 @@ interface VideoModalProps {
   title?: string;
 }
 
-function VideoModalComponent({
-  isOpen,
-  onClose,
-  videoSrc,
-  title,
-}: VideoModalProps) {
+function VideoModalComponent({ isOpen, onClose, videoSrc, title, }: VideoModalProps) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
