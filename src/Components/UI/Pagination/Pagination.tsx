@@ -9,33 +9,86 @@ interface PaginationProps {
 }
 
 function PaginationComponent({ currentPage, totalPage, onChange, }: PaginationProps) {
-  const getNumberPage = () => {
+  const getVisiblePages = () => {
     const pages: number[] = [];
-    for (let i = 1; i <= totalPage; i++) {
+    const maxVisible = 5;
+    const pagesAround = Math.floor(maxVisible / 2);
+
+    let start = Math.max(1, currentPage - pagesAround);
+    let end = Math.min(totalPage, currentPage + pagesAround);
+
+    if (currentPage - pagesAround < 1) {
+      end = Math.min(totalPage, maxVisible);
+    }
+    if (currentPage + pagesAround > totalPage) {
+      start = Math.max(1, totalPage - maxVisible + 1);
+    }
+
+    for (let i = start; i <= end; i++) {
       pages.push(i);
     }
     return pages;
   };
 
-  if (totalPage <= 1) {
-    return null;
-  }
+  const changePage = (page: number) => {
+    if (page >= 1 && page <= totalPage) {
+      onChange(page);
+    }
+  };
+
+  if (totalPage <= 1) return null;
 
   return (
     <nav className={styles.pagination}>
-      {getNumberPage().map((page) => {
-        return (
-          <Button
-            key={page}
-            size="min"
-            color={currentPage === page ? "primary" : "transparent"}
-            onClick={() => onChange(page)}
-            radius={5}
-          >
-            {page}
-          </Button>
-        );
-      })}
+      <Button
+        size="min"
+        color="transparent"
+        onClick={() => changePage(1)}
+        disabled={currentPage === 1}
+        radius={5}
+      >
+        «
+      </Button>
+      <Button
+        size="min"
+        color="transparent"
+        onClick={() => changePage(currentPage - 1)}
+        disabled={currentPage === 1}
+        radius={5}
+      >
+        ‹
+      </Button>
+
+      {getVisiblePages().map((page) => (
+        <Button
+          key={page}
+          size="min"
+          color={currentPage === page ? "primary" : "transparent"}
+          onClick={() => changePage(page)}
+          radius={5}
+        >
+          {page}
+        </Button>
+      ))}
+
+      <Button
+        size="min"
+        color="transparent"
+        onClick={() => changePage(currentPage + 1)}
+        disabled={currentPage === totalPage}
+        radius={5}
+      >
+        ›
+      </Button>
+      <Button
+        size="min"
+        color="transparent"
+        onClick={() => changePage(totalPage)}
+        disabled={currentPage === totalPage}
+        radius={5}
+      >
+        »
+      </Button>
     </nav>
   );
 }
