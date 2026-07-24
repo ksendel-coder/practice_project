@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { genres } from '../Components/Pages/Films/Films';
+import { genres } from '../Types/genres';
 import { Film } from '../Components/Pages/Films/Films';
 
 export const useFilmFilters = (films: Film[]) => {

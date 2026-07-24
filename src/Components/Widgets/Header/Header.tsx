@@ -18,6 +18,7 @@ function HeaderComponent() {
   const { performSearch } = useSearch();
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isActive = (path: string) => location.pathname === path;
+  const isHome = location.pathname === "/";
 
   const handleLogout = () => {
     logout();
@@ -81,20 +82,22 @@ function HeaderComponent() {
           </Button>
         </Link>
       </nav>
-      <div className={styles.header__instruments}>
-        <div className={styles.header__instruments__searchWrapper}>
-          <Input
-            placeholder="Введите для поиска..."
-            value={search}
-            onChange={setSearch}
-          />
-          <Icon
-            name="search"
-            className={styles.searchIcon}
-            onClick={handleSearchClick}
-          />
+      {isHome && (
+        <div className={styles.header__instruments}>
+          <div className={styles.header__instruments__searchWrapper}>
+            <Input
+              placeholder="Введите для поиска..."
+              value={search}
+              onChange={setSearch}
+            />
+            <Icon
+              name="search"
+              className={styles.searchIcon}
+              onClick={handleSearchClick}
+            />
+          </div>
         </div>
-      </div>
+      )}
       <div className={styles.header__user} ref={dropdownRef}>
         <div
           className={styles.userAvatar}

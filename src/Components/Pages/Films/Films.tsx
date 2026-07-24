@@ -11,17 +11,7 @@ import { VideoModal } from "../../Layouts/VideoModal";
 import { Loader } from "../../UI/Loader";
 import { useFilmFilters } from "../../../Hooks/useFilmFilters";
 import { usePagination } from "../../../Hooks/usePagination";
-
-export const genres = [
-  "Фантастика",
-  "Фэнтези",
-  "Драма",
-  "Мелодрама",
-  "Комедия",
-  "Боевик",
-  "Ужасы",
-  "Детектив",
-];
+import { genres } from "../../../Types/genres";
 
 export interface Film {
   _id: number;
