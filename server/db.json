@@ -204,6 +204,51 @@
       ],
       "image": "https://avatars.mds.yandex.net/get-mpic/18505141/2a0000019d09f937d09332722713ee64d573/orig",
       "videoUrl": "https://vkvideo.ru/video_ext.php?oid=-226802088&id=456244775&hash=a569258c73c8af9a&hd=3"
+    },
+    {
+      "_id": 16,
+      "title": "Мышь",
+      "genre": [
+        "Детектив"
+      ],
+      "image": "https://avatars.mds.yandex.net/get-kinopoisk-image/1629390/dd3fa61d-7297-44ff-b027-52a575adc9b6/1920x",
+      "videoUrl": "https://vkvideo.ru/video_ext.php?oid=-213350128&id=456240880&hash=9c4e12a74a6449a7&hd=10s"
+    },
+    {
+      "_id": 17,
+      "title": "Конец ***го мира",
+      "genre": [
+        "Комедия", "Мелодрама", "Драма"
+      ],
+      "image": "https://avatars.mds.yandex.net/get-kinopoisk-image/1600647/a6a199f9-3143-4b17-84ce-ee7f231b1797/1920x",
+      "videoUrl": "https://vkvideo.ru/video_ext.php?oid=-213350128&id=456240800&hash=9a3665943c7c1282&hd=4&t=12s"
+    },
+    {
+      "_id": 18,
+      "title": "Пираты Карибского моря: Проклятие Черной жемчужины",
+      "genre": [
+        "Боевик", "Фэнтези"
+      ],
+      "image": "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/d7e3dbd6-e4a9-4485-b751-d02f49825166/1920x",
+      "videoUrl": "https://vkvideo.ru/video_ext.php?oid=-230677466&id=456240088&hash=dbdb5e2ecde53906&hd=4"
+    },
+    {
+      "_id": 19,
+      "title": "Гадкий я",
+      "genre": [
+        "Комедия", "Фантастика"
+      ],
+      "image": "https://images-s.kinorium.com/movie/fanart/461314/w1500_52658094.jpg",
+      "videoUrl": "https://vkvideo.ru/video_ext.php?oid=-227596514&id=456243518&hash=68008d7dee596c4a&hd=4&t=5s"
+    },
+    {
+      "_id": 20,
+      "title": "F1",
+      "genre": [
+        "Драма"
+      ],
+      "image": "https://static.kinoafisha.info/k/movie_posters/1920x1080/upload/movie_posters/7/7/5/8371577/444471060811.jpg",
+      "videoUrl": "https://vkvideo.ru/video_ext.php?oid=-236102721&id=456240857&hash=02da5b3fdfc6a9ec&hd=4"
     }
   ],
   "threads": [
