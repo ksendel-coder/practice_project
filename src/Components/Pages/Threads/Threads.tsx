@@ -7,7 +7,7 @@ import { Icon } from "../../UI/Icon";
 import { threadsAPI } from "../../../Api/threads";
 import { ScrollToTop } from "../../UI/ScrollToTop";
 import { Loader } from "../../UI/Loader";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { RootState } from "../../../Stores/Store";
 
 export interface Post {

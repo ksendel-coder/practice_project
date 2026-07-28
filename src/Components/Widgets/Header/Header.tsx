@@ -18,7 +18,6 @@ function HeaderComponent() {
   const location = useLocation();
   const navigate = useNavigate();
   const isAuth = useSelector((state: RootState) => state.user.isAuth);
-  const userData = useSelector((state: RootState) => state.user.userData);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isActive = (path: string) => location.pathname === path;
   const isHome = location.pathname === "/";
