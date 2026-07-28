@@ -8,12 +8,13 @@ import { loginSchema } from "./schema";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { InferType } from "yup";
 import { Link, useNavigate } from "react-router-dom";
-import { useUserContext } from "../../../Contexts/UserContext";
 import { authAPI } from "../../../Api/auth";
+import { useDispatch } from "react-redux";
+import { signIn } from "../../../Reducers/userReduce";
 
 function LoginComponent() {
   const navigate = useNavigate();
-  const { setIsAuth, loadUserData } = useUserContext();
+  const dispatch = useDispatch();
 
   const loginForm = useForm({
     resolver: yupResolver(loginSchema),
@@ -48,19 +49,15 @@ function LoginComponent() {
           localStorage.removeItem("savedUsername");
           localStorage.removeItem("remember");
         }
-
-        localStorage.setItem(
-          "userData",
-          JSON.stringify({
-            _id: res.user._id,
-            name: res.user.username,
-            email: res.user.email || "",
-            bio: res.user.bio || "",
-            avatar: res.user.avatar || null,
-          }),
-        );
-        loadUserData();
-        setIsAuth(true);
+        const userData = {
+          _id: res.user._id,
+          name: res.user.username,
+          email: res.user.email || "",
+          bio: res.user.bio || "",
+          avatar: res.user.avatar || null,
+        };
+        localStorage.setItem("userData", JSON.stringify(userData));
+        dispatch(signIn(userData));
         navigate("/");
       }
     } catch (error) {

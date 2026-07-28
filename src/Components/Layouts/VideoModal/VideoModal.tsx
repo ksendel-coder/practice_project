@@ -36,7 +36,7 @@ function VideoModalComponent({ isOpen, onClose, videoSrc, title, }: VideoModalPr
             width="100%"
             height="100%"
             style={{ border: "none" }}
-            allow="clipboard-write; autoplay; fullscreen"
+            allow="fullscreen"
             allowFullScreen
             title={title || "Видео"}
           />

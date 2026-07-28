@@ -6,12 +6,14 @@ import { Checkbox } from "../../UI/Checkbox";
 import { Pagination } from "../../UI/Pagination";
 import { ScrollToTop } from "../../UI/ScrollToTop";
 import { filmsAPI } from "../../../Api/films";
-import { useSearch } from "../../../Contexts/SearchContext";
 import { VideoModal } from "../../Layouts/VideoModal";
 import { Loader } from "../../UI/Loader";
 import { useFilmFilters } from "../../../Hooks/useFilmFilters";
 import { usePagination } from "../../../Hooks/usePagination";
 import { genres } from "../../../Types/genres";
+import { cleanSearch, setSearch as setSearchAction} from "../../../Reducers/searchReduce";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../Stores/Store";
 
 export interface Film {
   _id: number;
@@ -22,11 +24,13 @@ export interface Film {
 }
 
 function FilmsComponent() {
-  const { searchQuery, setSearchQuery } = useSearch();
+  const dispatch = useDispatch();
+  const searchQuery = useSelector((state: RootState) => state.search.search);
   const [films, setFilms] = useState<Film[]>([]);
   const [selectedFilm, setSelectedFilm] = useState<Film | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [localSearch, setLocalSearch] = useState('');
 
   useEffect(() => {
     const fetchFilms = async () => {
@@ -45,13 +49,13 @@ function FilmsComponent() {
 
   useEffect(() => {
     if (searchQuery) {
-      setSearch(searchQuery);
-      setSearchQuery("");
+      setLocalSearch(searchQuery);
+      dispatch(cleanSearch());
     }
-  }, [searchQuery]);
+  }, [searchQuery, dispatch]);
 
-  const { search, setSearch, filters, toggleFilter, filteredFilms } =
-    useFilmFilters(films);
+  const { filters, toggleFilter, filteredFilms } =
+    useFilmFilters(films, localSearch);
 
   const { currentPage, setCurrentPage, totalPages, paginatedItems } =
     usePagination(filteredFilms, 9);
@@ -67,7 +71,8 @@ function FilmsComponent() {
   };
 
   const handleSearch = (value: string) => {
-    setSearch(value);
+    setLocalSearch(value);
+    dispatch(setSearchAction(value));
     setCurrentPage(1);
   };
 
@@ -83,7 +88,7 @@ function FilmsComponent() {
       <h1 className={styles.films__title}>Фильмы</h1>
       <Input
         placeholder="Поиск по названию..."
-        value={search}
+        value={localSearch}
         onChange={handleSearch}
       />
       <div className={styles.films__filters}>

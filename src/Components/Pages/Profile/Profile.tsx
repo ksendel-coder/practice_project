@@ -6,12 +6,15 @@ import { Controller, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { profileSchema } from "./schema";
 import { InferType } from "yup";
-import { useUserContext } from "../../../Contexts/UserContext";
 import { Icon } from "../../UI/Icon";
 import { authAPI } from "../../../Api/auth";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../Stores/Store";
+import { updateUser } from "../../../Reducers/userReduce";
 
 function ProfileComponent() {
-  const { userData, setUserData } = useUserContext();
+  const dispatch = useDispatch();
+  const userData = useSelector((state: RootState) => state.user.userData)
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [avatar, setAvatar] = useState<string | null>(userData?.avatar || null);
@@ -61,6 +64,12 @@ function ProfileComponent() {
       });
 
       if (res.ok) {
+        dispatch(updateUser({
+          name: data.username,
+          email: data.email,
+          bio: data.bio || "",
+          avatar: avatar || null,
+        }));
         const savedUser = localStorage.getItem("userData");
         if (savedUser) {
           const user = JSON.parse(savedUser);
@@ -76,12 +85,6 @@ function ProfileComponent() {
           }
           localStorage.setItem("userData", JSON.stringify(newData));
         }
-        setUserData({
-          name: data.username,
-          email: data.email,
-          bio: data.bio || "",
-          avatar: avatar || undefined,
-        });
         setIsLoading(false);
         setIsEditing(false);
         setShowPasswordFields(false);

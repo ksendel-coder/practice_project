@@ -1,12 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { useUserContext } from "../Contexts/UserContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../Stores/Store";
 
 interface ProtectedPages {
   children: React.ReactNode;
 }
 
 function ProtectedRoute({ children }: ProtectedPages) {
-  const { isAuth } = useUserContext();
+  const isAuth = useSelector((state: RootState) => state.user.isAuth);
 
   if (!isAuth) {
     return <Navigate to="/createUser" replace />;

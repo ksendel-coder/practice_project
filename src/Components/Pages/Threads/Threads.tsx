@@ -4,10 +4,11 @@ import { Input } from "../../UI/Input";
 import styles from "./Styles.module.scss";
 import { Card } from "../../Layouts/Card";
 import { Icon } from "../../UI/Icon";
-import { useUserContext } from "../../../Contexts/UserContext";
 import { threadsAPI } from "../../../Api/threads";
 import { ScrollToTop } from "../../UI/ScrollToTop";
 import { Loader } from "../../UI/Loader";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../Stores/Store";
 
 export interface Post {
   _id: number;
@@ -22,7 +23,7 @@ export interface Post {
 }
 
 function ThreadsComponent() {
-  const { userData } = useUserContext();
+  const userData = useSelector((state: RootState) => state.user.userData);
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [newTitle, setNewTitle] = useState("");
   const [newContent, setNewContent] = useState("");
@@ -52,7 +53,6 @@ function ThreadsComponent() {
             : false,
         }));
         setPosts(postsWithLikes);
-        console.log("Загружено постов:", data.length);
       } catch (error) {
         console.error(error);
       } finally {

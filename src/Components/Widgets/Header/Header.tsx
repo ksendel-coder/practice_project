@@ -3,25 +3,28 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Button } from "../../UI/Button/Button";
 import { Input } from "../../UI/Input/Input";
 import { Icon } from "../../UI/Icon/Icon";
-import { useUserContext } from "../../../Contexts/UserContext";
-import { useSearch } from "../../../Contexts/SearchContext";
 import styles from "./Styles.module.scss";
 import logo from "/logo.png";
 import useOutsideClick from "../../../Hooks/useClickOutside";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState, AppDispatch } from "../../../Stores/Store";
+import { signOut } from "../../../Reducers/userReduce";
+import { setSearch as setSearchAction } from "../../../Reducers/searchReduce";
 
 function HeaderComponent() {
+  const dispatch = useDispatch<AppDispatch>();
   const [search, setSearch] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
-  const { isAuth, logout } = useUserContext();
-  const { performSearch } = useSearch();
+  const isAuth = useSelector((state: RootState) => state.user.isAuth);
+  const userData = useSelector((state: RootState) => state.user.userData);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isActive = (path: string) => location.pathname === path;
   const isHome = location.pathname === "/";
 
   const handleLogout = () => {
-    logout();
+    dispatch(signOut());
     setIsDropdownOpen(false);
     navigate("/");
   };
@@ -45,7 +48,7 @@ function HeaderComponent() {
 
   const handleSearchClick = () => {
     if (search.trim()) {
-      performSearch(search.trim());
+      dispatch(setSearchAction(search.trim()));
       navigate("/films");
     }
   };

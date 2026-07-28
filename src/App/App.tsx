@@ -3,8 +3,6 @@ import "./Styles.scss";
 import { BrowserRouter, Routes, Route, Outlet } from "react-router-dom";
 import { CreateUser } from "../Components/Pages/CreateUser";
 import { Login } from "../Components/Pages/Login/Login";
-import { UserProvider } from "../Contexts/UserContext";
-import { SearchProvider } from "../Contexts/SearchContext";
 import ProtectedPages from "../Components/ProtectedPages";
 import { Header } from "../Components/Widgets/Header/Header";
 import { Home } from "../Components/Pages/Home/Home";
@@ -12,12 +10,13 @@ import { Footer } from "../Components/Widgets/Footer/Footer";
 import { Films } from "../Components/Pages/Films/Films";
 import { Profile } from "../Components/Pages/Profile/Profile";
 import { Threads } from "../Components/Pages/Threads/Threads";
+import { Store } from "../Stores/Store";
+import { Provider } from "react-redux";
 
 const basename = import.meta.env.PROD ? '/MultiCinema' : ''; 
 function AppComponent() {
   return (
-    <SearchProvider>
-      <UserProvider>
+      <Provider store={Store}>
         <BrowserRouter basename={basename}>
           <Routes>
             <Route path="/" element={<WrappPages />}>
@@ -52,8 +51,7 @@ function AppComponent() {
             <Route path="/profile" element={<Profile />} />
           </Routes>
         </BrowserRouter>
-      </UserProvider>
-    </SearchProvider>
+      </Provider>
   );
 }
 
